@@ -1,37 +1,59 @@
 import { useState, useEffect } from 'react';
-import { Button, Text, View } from 'react-native';
+import { Button, Text, View, TouchableOpacity } from 'react-native';
 
-const Timer = ({total_time})  => {
+const Timer = ({starting_increment, starting_bank, timer_running, setTurn})  => {
 
     // timer modal will pop up when player time hits 0
-    const [time, setTime] = useState(total_time)
-    const [timerRunning, setRun] = useState(false);
-    const [intervalRunning, setIntervalRun] = useState(false);
+    const [current_increment_time, setCurrentIncrementTime] = useState(starting_increment);
+    const [bank_time, setBankTime] = useState(starting_bank);
+    const [timerRunning, setRun] = useState(timer_running);
     useEffect(() => {
-        if (time <= 0) {
-            stopTimer();
-        }
         if (timerRunning) {
-            const intervalId = setInterval(() => {
-                setTime(prevTime => prevTime - 1);  // Use the functional update form
+          if (current_increment_time > 0) {
+            const incrementIntervalId = setInterval(() => {
+              setCurrentIncrementTime(incrementTime => incrementTime - 1);  // Use the functional update form
+            }, 1000);
+            return () => clearInterval(incrementIntervalId);
+          } else {
+            if (bank_time <= 0) {
+              console.log("you're fucked hehehehe");
+              stopTimer()
+            } else {
+              const bankIntervalId = setInterval(() => {
+                setBankTime(bankTime => bankTime - 1);  // Use the functional update form
               }, 1000);
-              return () => clearInterval(intervalId);
+              return () => clearInterval(bankIntervalId);
+            }
+          }
+
+        } else {
+          console.log("IS THIS STOP BEING HIT")
+          stopTimer();
         }
 
-    }, [time, timerRunning, intervalRunning]);
+    }, [current_increment_time, bank_time, timerRunning]);
     const stopTimer = () => {
+        setTurn(turn => turn + 1);
         setRun(false);
       };
     const startTimer = () => {
+        setCurrentIncrementTime(starting_increment);
         setRun(true);
     };
     return (
+      <TouchableOpacity>
       <View>
-        <Button title="Start Timer" onPress={() => {startTimer()}}/>
-        <Text>Timer</Text>
-        <Text>{time}</Text>
-        <Button title="Stop Timer" onPress={() => {stopTimer()}}/>
+        {/* <Button title="Start Timer" onPress={() => {startTimer()}}/> */}
+        <Text>Timer {timer_running.toString()}</Text>
+        {current_increment_time > 0 && timerRunning
+        ?
+        <Text>{current_increment_time} + {bank_time}</Text>
+        : <Text>{bank_time}</Text>
+      }
+        {/* <Button title="Stop Timer" onPress={() => {stopTimer()}}/> */}
       </View>
+      </TouchableOpacity>
+
     );
 }
 
