@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import Player from '../Player/player';
 import { Button, Text, View } from 'react-native';
 
-const Game = ({ starting_increment, starting_bank, timer_running })  => {
+const Game = ({ starting_increment, starting_bank })  => {
     const startingNumberOfPlayers = [0, 1, 2, 3];
     const [currentTurn, setTurn] = useState(0);
     // useEffect
@@ -26,6 +26,7 @@ const Game = ({ starting_increment, starting_bank, timer_running })  => {
                     starting_bank={starting_bank} 
                     is_playing={true} 
                     setTurn={setTurn}
+                    current_turn={currentTurn === player}
                 />
             );
         } else {
@@ -36,6 +37,7 @@ const Game = ({ starting_increment, starting_bank, timer_running })  => {
                     starting_bank={starting_bank} 
                     is_playing={false} 
                     setTurn={setTurn}
+                    current_turn={currentTurn === player}
                 />
             );
         }
