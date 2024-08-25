@@ -1,17 +1,29 @@
 import { useState, useEffect } from 'react';
 import Timer from '../Timer/timer';
-import { Button, Text, View } from 'react-native';
+import { Button, Text, View, StyleSheet } from 'react-native';
+import { Card, Icon } from '@rneui/themed';
+
+
 
 const Player = ({ id, starting_increment, starting_bank, is_playing, setTurn, current_turn })  => {
 
     return (
-      <View disabled={!is_playing}>
-        <Text>Player {id} + {is_playing.toString()}</Text>
+    <Card containerStyle={{ width: '50%', height: '50%', margin: '0', padding: '0', backgroundColor: 'red'}} disabled={!is_playing}>
+      <View>
+        <Text>Player {id}</Text>
         <Timer player_id={id} starting_increment={starting_increment} starting_bank={starting_bank} timer_running={is_playing} setTurn={setTurn} current_turn={current_turn}/>
-        {/* <Button>click for turn</>
-        <Text>Time Timer.time()</> */}
       </View>
+    </Card>
+
     );
 }
+
+const styles = StyleSheet.create({
+    item: {
+      width: '50%', 
+      height: '50%'
+    }
+  });
+  
 
 export default Player;

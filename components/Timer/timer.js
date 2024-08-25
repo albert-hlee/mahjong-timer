@@ -33,26 +33,19 @@ const Timer = ({player_id, starting_increment, starting_bank, timer_running, set
     }, [current_increment_time, bank_time, timerRunning, current_turn]);
     const stopTimer = () => {
       setCurrentIncrementTime(starting_increment);
-        setRun(false);
+      setRun(false);
       };
-    // const startTimer = () => {
-    //     setCurrentIncrementTime(starting_increment);
-    //     setRun(true);
-    // };
     return (
       <TouchableOpacity onPress={() => { 
         stopTimer();
         setTurn(turn => (turn + 1) % 4); 
        }}>
       <View>
-        {/* <Button title="Start Timer" onPress={() => {startTimer()}}/> */}
-        <Text>Timer {timer_running.toString()}</Text>
         {current_increment_time > 0 && timer_running
         ?
         <Text>{current_increment_time} + {bank_time}</Text>
         : <Text>{bank_time}</Text>
       }
-        {/* <Button title="Stop Timer" onPress={() => {stopTimer()}}/> */}
       </View>
       </TouchableOpacity>
 

@@ -1,22 +1,13 @@
 import { useState, useEffect } from 'react';
 import Player from '../Player/player';
-import { Button, Text, View } from 'react-native';
+import { Button, Text, View, StyleSheet } from 'react-native';
 
 const Game = ({ starting_increment, starting_bank })  => {
     const startingNumberOfPlayers = [0, 1, 2, 3];
     const [currentTurn, setTurn] = useState(0);
-    // useEffect
-        // on click/touch of currentPlayer component, update state of current Turn to next player in array 
-        // 
-    useEffect(() => {
-        console.log("does this do anything")
-    }, [currentTurn])
-    
-    const nextPlayer = () => {
-        setTurn(currentTurn => (currentTurn + 1) % 4)
-    };
+
     return (
-        <View>
+        <View style={styles.container}>
             {startingNumberOfPlayers.map(player => {
         if (player === currentTurn) {
             return (
@@ -42,9 +33,18 @@ const Game = ({ starting_increment, starting_bank })  => {
             );
         }
     })}
-        <Button title="Next Player" onPress={() => {nextPlayer()}}/>
       </View>
     );
 }
+
+const styles = StyleSheet.create({
+    container: {
+      display: 'flex', 
+      flexDirection: 'row',
+      flexWrap: 'wrap', 
+      flex: 1
+    }
+  });
+  
 
 export default Game;
