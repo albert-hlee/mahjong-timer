@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Button, Text, View, TouchableOpacity } from 'react-native';
+import { Button, Text, View, TouchableOpacity, StyleSheet } from 'react-native';
 
 const Timer = ({player_id, starting_increment, starting_bank, timer_running, setTurn, current_turn})  => {
 
@@ -19,6 +19,7 @@ const Timer = ({player_id, starting_increment, starting_bank, timer_running, set
             if (bank_time <= 0) {
               console.log("you're fucked hehehehe");
               stopTimer();
+              setTurn(turn => (turn + 1) % 4)
             } else {
               const bankIntervalId = setInterval(() => {
                 setBankTime(bankTime => bankTime - 1);  // Use the functional update form
@@ -28,6 +29,8 @@ const Timer = ({player_id, starting_increment, starting_bank, timer_running, set
           }
 
         }
+      } else {
+        stopTimer();
       }
 
     }, [current_increment_time, bank_time, timerRunning, current_turn]);
@@ -36,20 +39,22 @@ const Timer = ({player_id, starting_increment, starting_bank, timer_running, set
       setRun(false);
       };
     return (
-      <TouchableOpacity onPress={() => { 
-        stopTimer();
-        setTurn(turn => (turn + 1) % 4); 
-       }}>
       <View>
         {current_increment_time > 0 && timer_running
         ?
-        <Text>{current_increment_time} + {bank_time}</Text>
-        : <Text>{bank_time}</Text>
+        <Text style={styles.timer}>{current_increment_time} + {bank_time}</Text>
+        : <Text style={styles.timer}>{bank_time}</Text>
       }
       </View>
-      </TouchableOpacity>
 
     );
 }
+
+const styles = StyleSheet.create({
+  timer: {
+    textAlign: 'center', // <-- the magic
+    fontWeight: 'bold',
+}
+})
 
 export default Timer;
