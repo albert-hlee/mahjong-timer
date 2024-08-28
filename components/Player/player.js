@@ -21,7 +21,7 @@ const Player = ({ id, starting_increment, starting_bank, is_playing, setTurn, cu
 }
 
 const styles = StyleSheet.create({
-    container: { width: '50%', height: '50%', margin: '0', padding: '0', backgroundColor: 'white'},
+    container: { width: '50%', height: '50%', margin: '0', padding: '0', backgroundColor: 'white', borderColor: 'black', borderWidth: 1.5},
     item: {
         borderWidth: 0, // Remove Border
 
