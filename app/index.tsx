@@ -12,7 +12,7 @@ export default function HomeScreen() {
       <StatusBar
         hidden={true}
       />
-        <Game starting_increment={5} starting_bank={20}/>
+        <Game starting_increment={2} starting_bank={5}/>
     </ScrollView>
   );
 }

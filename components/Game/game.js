@@ -7,7 +7,9 @@ const Game = ({ starting_increment, starting_bank })  => {
     const [currentTurn, setTurn] = useState(0);
 
     const endTurnCb = () => {
+        console.log("endTurn CB called")
         setTurn(playerTurn => (playerTurn + 1) % 4);
+        console.log("playerTurn: " + currentTurn)
     }
 
     return (

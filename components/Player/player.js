@@ -6,14 +6,20 @@ import { Card, Icon } from '@rneui/themed';
 
 
 const Player = ({ id, starting_increment, starting_bank, endTurnCb, my_turn })  => {
+  console.log("PlayerID: " + id + " my_turn: " + my_turn)
+
+  const out_of_time_cb = () => {
+    endTurnCb();
+  };
 
     return (
     <TouchableOpacity disabled={!my_turn} style={styles.container} onPress={() => { 
+      console.log("clicked player: " + id)
       endTurnCb(); }}>
     <Card containerStyle={styles.item}>
       <View style={styles.item}>
         <Text style={styles.item}>Player {id}</Text>
-        <Timer player_id={id} starting_increment={starting_increment} starting_bank={starting_bank} timer_running={my_turn} current_turn={my_turn}/>
+        <Timer player_id={id} starting_increment={starting_increment} starting_bank={starting_bank} timer_running={my_turn} out_of_time_cb={out_of_time_cb}/>
       </View>
     </Card>
     </TouchableOpacity>
