@@ -39,10 +39,10 @@ const Game = ({ starting_increment, starting_bank })  => {
                 );
             }
         )}
-      </View>
+        </View>
 
-      <View style={styles.pauseButton}>
-            <Link href="/pauseModal"> Press me </Link>
+        <View style={styles.pauseButton}>
+            <Link href="/pauseModal">&#9616;&#9616;</Link>
         </View>
 
       </ScrollView>
@@ -73,8 +73,12 @@ const styles = StyleSheet.create({
         backgroundColor: 'pink',
         maxwidth: 'fit-content',
         alignSelf: 'center',
+        borderRadius: 42,
+        width: 50,
+        height: 50,
+        alignItems: 'center',
     }
-  });
+});
   
 
 export default Game;
