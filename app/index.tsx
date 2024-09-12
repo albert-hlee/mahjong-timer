@@ -1,24 +1,12 @@
-import { Image, StyleSheet, Platform, ScrollView, View, StatusBar } from 'react-native';
+import { View } from 'react-native';
+import { Link } from 'expo-router';
 
-import { HelloWave } from '@/components/HelloWave';
-import ParallaxScrollView from '@/components/ParallaxScrollView';
-import { ThemedText } from '@/components/ThemedText';
-import { ThemedView } from '@/components/ThemedView';
-import Game from '@/components/Game/game';
-
-export default function HomeScreen() {
-  return (
-    <ScrollView contentContainerStyle={styles.container}>
-      <StatusBar
-        hidden={true}
-      />
-        <Game starting_increment={5} starting_bank={20}/>
-    </ScrollView>
-  );
-}
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1
+export default function RunGame() {
+    return (
+      <View>
+        <Link href="/gameView">Main Menu</Link>
+        {/* ...other links */}
+        <Link href="/mainMenu">View user</Link>
+      </View>
+    );
   }
-});

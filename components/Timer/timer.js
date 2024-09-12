@@ -33,7 +33,6 @@ const Timer = ({player_id, starting_increment, starting_bank, timer_running, out
     }, [current_increment_time, bank_time, timer_running, out_of_time_cb]);
     const resetTimer = () => {
       setCurrentIncrementTime(starting_increment);
-      setRun(false);
       };
     return (
       <View>

@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import Player from '../Player/player';
-import { Button, Text, View, StyleSheet, TouchableOpacity } from 'react-native';
+import { Button, Text, View, StyleSheet, TouchableOpacity, ScrollView, StatusBar } from 'react-native';
 
 const Game = ({ starting_increment, starting_bank })  => {
     const startingNumberOfPlayers = [0, 1, 2, 3];
@@ -11,6 +11,10 @@ const Game = ({ starting_increment, starting_bank })  => {
     }
 
     return (
+    <ScrollView contentContainerStyle={styles.container}>
+        <StatusBar
+          hidden={true}
+        />
         <View style={styles.container}>
             {startingNumberOfPlayers.map(player => {
                 return (
@@ -34,6 +38,8 @@ const Game = ({ starting_increment, starting_bank })  => {
             
     })}
       </View>
+      </ScrollView>
+
     );
 }
 
