@@ -8,12 +8,6 @@ import MainMenu from '@/components/MainMenu/mainMenu';
 
 export default function GameView() {
   return (
-        <MainMenu />
+        <MainMenu/>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1
-  }
-});

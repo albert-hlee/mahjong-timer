@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import Player from '../Player/player';
 import { Button, Text, View, StyleSheet, TouchableOpacity, ScrollView, StatusBar } from 'react-native';
+import { Link } from 'expo-router';
 
 const Game = ({ starting_increment, starting_bank })  => {
     const startingNumberOfPlayers = [0, 1, 2, 3];
@@ -15,6 +16,7 @@ const Game = ({ starting_increment, starting_bank })  => {
         <StatusBar
           hidden={true}
         />
+
         <View style={styles.container}>
             {startingNumberOfPlayers.map(player => {
                 return (
@@ -35,9 +37,14 @@ const Game = ({ starting_increment, starting_bank })  => {
                     </TouchableOpacity>
 
                 );
-            
-    })}
+            }
+        )}
       </View>
+
+      <View style={styles.pauseButton}>
+            <Link href="/pauseModal"> Press me </Link>
+        </View>
+
       </ScrollView>
 
     );
@@ -54,10 +61,18 @@ const styles = StyleSheet.create({
         borderWidth: 1.5
       },
     container: {
-      display: 'flex', 
-      flexDirection: 'row',
-      flexWrap: 'wrap', 
-      flex: 1
+        justifyContent: 'center', // to center the pauseButton
+
+        display: 'flex', 
+        flexDirection: 'row',
+        flexWrap: 'wrap', 
+        flex: 1
+    },
+    pauseButton: {
+        position: 'absolute',
+        backgroundColor: 'pink',
+        maxwidth: 'fit-content',
+        alignSelf: 'center',
     }
   });
   
