@@ -6,8 +6,24 @@ import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
 import MainMenu from '@/components/MainMenu/mainMenu';
 
-export default function GameView() {
+import { Link } from 'expo-router';
+
+
+export default function MainMenuView() {
   return (
-        <MainMenu/>
+      <ScrollView>
+        {/* TODO: link mainmenu inputs to push to gameView */}
+        <MainMenu/> 
+        <Link push href={{
+            pathname: "/gameView",
+            params:{
+              starting_increment: 5,
+              starting_bank: 20
+            },
+          }}
+        >
+        Start Game
+        </Link>
+      </ScrollView>
   );
 }

@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import Player from '../Player/player';
 import { Button, Text, View, StyleSheet, TouchableOpacity, ScrollView, StatusBar } from 'react-native';
-import { Link } from 'expo-router';
+import { Link, Stack } from 'expo-router';
 
 const Game = ({ starting_increment, starting_bank })  => {
     const startingNumberOfPlayers = [0, 1, 2, 3];
@@ -62,6 +62,7 @@ const styles = StyleSheet.create({
       },
     container: {
         justifyContent: 'center', // to center the pauseButton
+        alignItems: 'center',
 
         display: 'flex', 
         flexDirection: 'row',
