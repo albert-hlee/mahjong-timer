@@ -1,14 +1,19 @@
 import { Link, router} from 'expo-router';
-import { StyleSheet, Text, View, StatusBar } from 'react-native';
+import { StyleSheet, Text, View, StatusBar, Modal } from 'react-native';
 
-export default function Modal() {
+export default function ModalView() {
   const isPresented = router.canGoBack();
 
   return (
     <View style={styles.container}>
-        <Text>Pause screen</Text>
-        {!isPresented && <Link href="../">Dismiss modal</Link>}
-        <Link replace href="/">main menu</Link>
+        <Modal
+            animationType='slide' 
+            transparent={true}
+        >
+            <Text>Pause screen</Text>
+            <Link replace href="/">main menu</Link>
+            <Link href="../">Back</Link>
+        </Modal>
     </View>
   );
 }

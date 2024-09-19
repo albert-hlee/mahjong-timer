@@ -10,7 +10,7 @@ import { useLocalSearchParams } from 'expo-router';
 export default function GameView() {
   const user = useLocalSearchParams()
   return (
-        <Game starting_increment={user.starting_increment} starting_bank={user.starting_bank}/>
+    <Game starting_increment={user.starting_increment} starting_bank={user.starting_bank}/>
   );
 }
 

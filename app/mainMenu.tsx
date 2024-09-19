@@ -11,19 +11,6 @@ import { Link } from 'expo-router';
 
 export default function MainMenuView() {
   return (
-      <ScrollView>
-        {/* TODO: link mainmenu inputs to push to gameView */}
-        <MainMenu/> 
-        <Link push href={{
-            pathname: "/gameView",
-            params:{
-              starting_increment: 5,
-              starting_bank: 20
-            },
-          }}
-        >
-        Start Game
-        </Link>
-      </ScrollView>
+    <MainMenu/> 
   );
 }
