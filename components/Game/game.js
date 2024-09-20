@@ -1,11 +1,11 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import Player from '../Player/player';
 import { Button, Text, View, StyleSheet, TouchableOpacity, ScrollView, StatusBar } from 'react-native';
 import { Link, Stack } from 'expo-router';
 
 const Game = ({ starting_increment, starting_bank })  => {
-    const startingNumberOfPlayers = [0, 1, 2, 3];
     const [currentTurn, setTurn] = useState(null);
+    const startingNumberOfPlayers = [0, 1, 2, 3];
 
     const endTurnCb = () => {
         setTurn(playerTurn => (playerTurn + 1) % 4);
@@ -41,44 +41,18 @@ const Game = ({ starting_increment, starting_bank })  => {
         )}
         </View>
 
-        <View style={styles.pauseButton}>
-            <Link href="/pauseModal">&#9616;&#9616;</Link>
-        </View>
-
       </ScrollView>
 
     );
 }
 
 const styles = StyleSheet.create({
-    button: { 
-        width: '50%', 
-        height: '50%', 
-        margin: '0', 
-        padding: '0', 
-        backgroundColor: 'white', 
-        borderColor: 'black', 
-        borderWidth: 1.5
-      },
     container: {
-        justifyContent: 'center', // to center the pauseButton
-        alignItems: 'center',
-
         display: 'flex', 
         flexDirection: 'row',
         flexWrap: 'wrap', 
         flex: 1
     },
-    pauseButton: {
-        position: 'absolute',
-        backgroundColor: 'pink',
-        maxwidth: 'fit-content',
-        alignSelf: 'center',
-        borderRadius: 42,
-        width: 50,
-        height: 50,
-        alignItems: 'center',
-    }
 });
   
 
