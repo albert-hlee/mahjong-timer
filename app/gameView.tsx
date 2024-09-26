@@ -19,9 +19,9 @@ export default function GameView() {
     <View>
       <Game starting_increment={user.starting_increment} starting_bank={user.starting_bank}/>
 
-      <View style={styles.pauseButton}>
+      {/* <View style={styles.pauseButton}>
         <PauseMenu isVisible={isModalVisible} onClose={onModalClose}> </PauseMenu>
-      </View>
+      </View> */}
     </View>
   );
 }

@@ -1,10 +1,9 @@
 import { useState, useEffect } from 'react';
 import Timer from '../Timer/timer';
 
-import { Button, InputAccessoryView, Keyboard, Text, TextInput, TouchableWithoutFeedback, View, StyleSheet } from 'react-native';
+import { Keyboard, Text, TouchableWithoutFeedback, View, ScrollView, StyleSheet } from 'react-native';
 import { Card, Icon } from '@rneui/themed';
-import { Dropdown } from 'react-native-element-dropdown';
-
+import { Link } from 'expo-router';
 
 const MainMenu = ({})  => {
     const [startingNumberOfPlayers, setNumberOfPlayers] = useState(4);
@@ -26,8 +25,8 @@ const MainMenu = ({})  => {
       <Link push href={{
         pathname: "/gameView",
         params:{
-          starting_increment: startingIncrement,
-          starting_bank: startingBank,
+          starting_increment: 5,
+          starting_bank: 20,
         },
       }}
       >
