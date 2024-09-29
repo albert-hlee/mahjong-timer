@@ -14,27 +14,56 @@ const MainMenu = ({})  => {
 
     return (
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+        <Card containerStyle={styles.item}>
+          <View style={styles.view}>
+            <Text style={styles.title}>Game Settings</Text>
+            <Text style={styles.item}>Starting Number of Players</Text>
+            <TextInput 
+            style={styles.input}         
+            onChangeText={setNumberOfPlayers}
+            inputMode="numeric"
+            keyboardType='numeric'
+            >{startingNumberOfPlayers}</TextInput>
+            <Text style={styles.item}>Rounds</Text>
+            <TextInput 
+            style={styles.input}         
+            onChangeText={setNumberOfRounds}
+            keyboardType='numeric'
+            type="number">{startingNumberOfRounds}</TextInput>
+            <Text style={styles.item}>Starting Points</Text>
+            <TextInput 
+            style={styles.input}         
+            onChangeText={setPoints}
+            keyboardType='numeric'
+            type="number">{startingPoints}</TextInput>
+            <Text style={styles.item}>Base Time</Text>
+            <TextInput 
+            style={styles.input}         
+            onChangeText={setBaseTime}
+            keyboardType='numeric'
+            type="number">{baseTime}</TextInput>
+            <Text style={styles.item}>Increment Time</Text>
+            <TextInput 
+            style={styles.input}         
+            onChangeText={setIncrementTime}
+            keyboardType='numeric'
+            type="number">{incrementTime}</TextInput>
+            <Button title="Start Game"></Button>
+          </View>
+        </Card>
 
-      <ScrollView>
-      <Card containerStyle={styles.item}>
-        <View style={styles.view}>
-          <Text style={styles.item}>Player 1</Text>
-        </View>
-      </Card>
+        <Link push href={{
+              pathname: "/gameView",
+              params:{
+                starting_increment: 5,
+                starting_bank: 20,
+              },
+            }}
+        >
+          Start Game
+        </Link>
+      </TouchableWithoutFeedback>
 
-      <Link push href={{
-        pathname: "/gameView",
-        params:{
-          starting_increment: 5,
-          starting_bank: 20,
-        },
-      }}
-      >
-      Start Game
-      </Link>
-    </ScrollView>
-
-    </TouchableWithoutFeedback>
     );
 }
 
