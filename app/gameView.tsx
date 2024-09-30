@@ -16,12 +16,12 @@ export default function GameView() {
   };
 
   return (
-    <View>
+    <View style={styles.container}>
       <Game starting_increment={user.starting_increment} starting_bank={user.starting_bank}/>
 
-      {/* <View style={styles.pauseButton}>
+      <View style={styles.pauseButton}>
         <PauseMenu isVisible={isModalVisible} onClose={onModalClose}> </PauseMenu>
-      </View> */}
+      </View>
     </View>
   );
 }
@@ -39,12 +39,5 @@ const styles = StyleSheet.create({
     width: 50,
     height: 50,
     alignItems: 'center',
-  },
-  button: { 
-    width: '50%', 
-    height: '50%', 
-    backgroundColor: 'white', 
-    borderColor: 'black', 
-    borderWidth: 1.5
   },
 });

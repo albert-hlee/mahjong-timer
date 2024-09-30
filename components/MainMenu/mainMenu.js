@@ -28,24 +28,28 @@ const MainMenu = ({})  => {
             <TextInput
             style={styles.input}
             onChangeText={setNumberOfRounds}
+            inputMode="numeric"
             keyboardType='numeric'
             type="number">{startingNumberOfRounds}</TextInput>
             <Text style={styles.item}>Starting Points</Text>
             <TextInput
             style={styles.input}
             onChangeText={setPoints}
+            inputMode="numeric"
             keyboardType='numeric'
             type="number">{startingPoints}</TextInput>
             <Text style={styles.item}>Base Time</Text>
             <TextInput
             style={styles.input}
             onChangeText={setBaseTime}
+            inputMode="numeric"
             keyboardType='numeric'
             type="number">{baseTime}</TextInput>
             <Text style={styles.item}>Increment Time</Text>
             <TextInput
             style={styles.input}
             onChangeText={setIncrementTime}
+            inputMode="numeric"
             keyboardType='numeric'
             type="number">{incrementTime}</TextInput>
 
