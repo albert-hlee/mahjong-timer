@@ -5,6 +5,7 @@ import Game from '@/components/Game/game';
 import { Link, useLocalSearchParams } from 'expo-router';
 
 import PauseMenu from './pauseModal';
+import { Button } from '@rneui/base';
 
 export default function GameView() {
   const [isModalVisible, setIsModalVisible] = useState(false);
@@ -15,13 +16,18 @@ export default function GameView() {
     setIsModalVisible(false);
   };
 
+  const showModal = () => {
+    setIsModalVisible(true);
+  };
+
   return (
     <View style={styles.container}>
       <Game starting_increment={user.starting_increment} starting_bank={user.starting_bank}/>
 
       <View style={styles.pauseButton}>
-        <PauseMenu isVisible={isModalVisible} onClose={onModalClose}> </PauseMenu>
+        <Button onPress={() => showModal()}>P</Button>
       </View>
+      <PauseMenu isVisible={isModalVisible} onClose={onModalClose}> </PauseMenu>
     </View>
   );
 }

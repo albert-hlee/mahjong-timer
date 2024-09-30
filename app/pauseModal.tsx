@@ -8,13 +8,13 @@ export default function PauseMenu( {isVisible, onClose} : any ) {
   return (
     <Modal
         animationType='slide' 
-        transparent={true}
+        transparent={false}
         visible={isVisible}
     >
         <Text>Pause screen</Text>
         <Link replace href="/">main menu</Link>
         <Pressable onPress={onClose}>
-            Back
+            <Text>Back</Text>
         </Pressable>
     </Modal>
   );
