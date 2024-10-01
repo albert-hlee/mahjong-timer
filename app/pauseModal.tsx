@@ -13,9 +13,9 @@ export default function PauseMenu( {isVisible, onClose} : any ) {
     >
       <View style={styles.container}>
         <Text style={styles.title}>Pause screen</Text>
-        <Link replace href="/">Home Page</Link>
+        <Link style={styles.link} replace href="/">Home Page</Link>
         <Pressable onPress={onClose}>
-            <Text>Back</Text>
+            <Text style={styles.link}>Back</Text>
         </Pressable>
       </View>
     </Modal>
@@ -31,6 +31,11 @@ const styles = StyleSheet.create({
   title: {
     textAlign: 'center',
     fontStyle: 'normal',
-    fontSize: 30
+    fontSize: 30,
+    paddingBottom: 50
+  },
+  link: {
+    fontSize: 18,             // Optional: set font size
+    padding: 30,              // Optional: add padding around the links
   },
 });

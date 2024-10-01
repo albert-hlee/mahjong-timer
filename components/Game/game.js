@@ -28,10 +28,16 @@ const Game = ({ starting_increment, starting_bank, pause_game_flag })  => {
     }
 
     const endTurnCb = () => {
-        setTurn(playerTurn => (playerTurn + 1) % 4);
+        setTurn(playerTurn => (playerTurn - 1) % 4);
+    }
+
+    const chiDisabledCondition = (player) => {
+        console.log("IS THIS BEING HIT", player)
+        return player - currentTurn === 3 || player - currentTurn === -1;
     }
 
     const playerStyle = function(player) {
+        // eslint-disable-next-line react-hooks/rules-of-hooks
         const {height, width} = useWindowDimensions();
         const x = playerToLocationX[player]
         const y = playerToLocationY[player]
@@ -67,7 +73,7 @@ const Game = ({ starting_increment, starting_bank, pause_game_flag })  => {
                                 if(currentTurn === null) {
                                     setTurn(player);
                                 } else{
-                                    setTurn(playerTurn => (playerTurn + 1) % 4);
+                                    setTurn(playerTurn => (playerTurn + 3) % 4);
                                 }
                             }}>
                                 <Player 
@@ -81,15 +87,18 @@ const Game = ({ starting_increment, starting_bank, pause_game_flag })  => {
                             </TouchableOpacity>
 
                             <View style={styles.rightButtonContainer}>
-                                <Pressable style={styles.smallButton}>
+                                <TouchableOpacity style={styles.smallButton} onPress={() => setTurn(player)}>
                                     <Text style={styles.smallButtonText}>Pon / Kan</Text>
-                                </Pressable>
-                                <Pressable style={styles.smallButton}>
-                                    <Text style={styles.smallButtonText}>Ron / Tsumo</Text>
-                                </Pressable>
-                                <Pressable style={styles.smallButton}>
+                                </TouchableOpacity>
+                                <TouchableOpacity style={styles.smallButton} onPress={() => setTurn(player)}>
+                                    <Text style={styles.smallButtonText}>Ron</Text>
+                                </TouchableOpacity>
+                                <TouchableOpacity style={styles.smallButton} onPress={() => setTurn(player)}>
+                                    <Text style={styles.smallButtonText}>Tsumo</Text>
+                                </TouchableOpacity>
+                                <TouchableOpacity style={styles.smallButton} onPress={() => setTurn(player)}>
                                     <Text style={styles.smallButtonText}>Chi</Text>
-                                </Pressable>
+                                </TouchableOpacity>
                             </View>
                         </View>
                     </View>
@@ -131,11 +140,16 @@ const styles = StyleSheet.create({
         width: '25%'
     },
     smallButton: {
-        backgroundColor: '#ddd',
+        backgroundColor: 'black',
+        borderColor: 'white',
+        borderWidth: 1,
         alignItems: 'center',
         justifyContent: 'center',
-        height: '33%', 
+        height: '25%', 
         width: '100%'
+    },
+    smallButtonText: {
+        color: 'white'
     },
     parentContainer: {
         width: '100%', 

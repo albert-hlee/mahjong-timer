@@ -4,8 +4,8 @@ import { Link } from 'expo-router';
 export default function RunGame() {
     return (
       <View style={styles.container}>
-        <Link push href="/gameView">Default Game</Link>
-        <Link push href="/mainMenu">Main Menu</Link>
+        <Link style={styles.link} push href="/gameView">Default Game</Link>
+        <Link style={styles.link} push href="/mainMenu">Main Menu</Link>
       </View>
     );
   }
@@ -20,7 +20,6 @@ export default function RunGame() {
     },
     link: {
       fontSize: 18,             // Optional: set font size
-      padding: 10,              // Optional: add padding around the links
-      color: 'blue',            // Optional: set text color
+      padding: 100,              // Optional: add padding around the links
     },
   };
