@@ -13,16 +13,32 @@ const Game = ({ starting_increment, starting_bank })  => {
         3: 90,
     };
 
+    const playerToLocationX = {
+        0: 0,
+        1: 1,
+        2: 1,
+        3: 0,
+    }
+
+    const playerToLocationY = {
+        0: 0,
+        1: 0,
+        2: 1,
+        3: 1,
+    }
+
     const endTurnCb = () => {
         setTurn(playerTurn => (playerTurn + 1) % 4);
     }
 
     const playerStyle = function(player) {
         const {height, width} = useWindowDimensions();
+        const x = playerToLocationX[player]
+        const y = playerToLocationY[player]
         return {
-            top: 0,
-            left: 0,
-            width: height/2, 
+            top: -(width-height)/4 + y*height/2,
+            left: (width-height)/4 + x*width/2,
+            width: height/2,
             height: width/2,
             justifyContent: 'center',
             alignItems: 'center',
@@ -37,36 +53,36 @@ const Game = ({ starting_increment, starting_bank })  => {
     }
 
     return (
-        <ScrollView contentContainerStyle={styles.parentContainer}>
+        <View style={styles.parentContainer}>
             <StatusBar
             hidden={true}
             />
 
-            <View style={styles.container}>
-                {startingNumberOfPlayers.map(player => {
-                    return (
-                        <TouchableOpacity disabled={!((currentTurn === null) || currentTurn === player)} style={playerStyle(player)} onPress={() => { 
-                            if(currentTurn === null) {
-                                setTurn(player);
-                            } else{
-                                setTurn(playerTurn => (playerTurn + 1) % 4);
-                            }
-                        }}>
-                            <Player 
-                                id={player} 
-                                starting_increment={starting_increment} 
-                                starting_bank={starting_bank} 
-                                endTurnCb={endTurnCb}
-                                my_turn={currentTurn === player}
-                            />
-                        </TouchableOpacity>
+            {startingNumberOfPlayers.map(player => {
+                return (
+                    <TouchableOpacity disabled={!((currentTurn === null) || currentTurn === player)} style={playerStyle(player)} onPress={() => { 
+                        if(currentTurn === null) {
+                            setTurn(player);
+                        } else{
+                            setTurn(playerTurn => (playerTurn + 1) % 4);
+                        }
+                    }}>
+                        <Player 
+                            id={player} 
+                            starting_increment={starting_increment} 
+                            starting_bank={starting_bank} 
+                            endTurnCb={endTurnCb}
+                            my_turn={currentTurn === player}
+                        />
+                    </TouchableOpacity>
 
-                    );
-                }
-            )}
-            </View>
+                );
+            }
+        )}
 
-        </ScrollView>
+        </View>
+
+ 
 
     );
 }
@@ -81,15 +97,16 @@ const styles = StyleSheet.create({
     //     borderColor: 'black', 
     //     borderWidth: 1.5
     //   },
-    container: {
-      flexDirection: 'row',
-      flexWrap: 'wrap', 
-      justifyContent: 'center',
-      alignItems: 'center',
-    },
     parentContainer: {
         width: '100%', 
-        height: '100%', 
+        height: '100%',
+    },
+    test: {
+        top: 0,
+        left: 0,
+        height:'50%',
+        position: 'absolute',
+        backgroundColor: 'red', 
     }
 
   });

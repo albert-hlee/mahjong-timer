@@ -1,5 +1,5 @@
 import { useState} from 'react';
-import { Image, Pressable, StyleSheet, TouchableHighlight, TouchableOpacity, View} from 'react-native';
+import { Image, StyleSheet, TouchableOpacity, View} from 'react-native';
 
 import Game from '@/components/Game/game';
 import { Link, useLocalSearchParams } from 'expo-router';
@@ -20,15 +20,17 @@ export default function GameView() {
     setIsModalVisible(false);
   };
 
-  const showModal = () => {
-    setIsModalVisible(true);
-  };
-
   return (
     <View style={styles.container}>
       <Game starting_increment={user.starting_increment} starting_bank={user.starting_bank}/>
-      <TouchableOpacity onPress={() => showModal()} style={styles.pauseButton}>
-        <Image source={require('./ryan.png')} style={styles.ryan} />
+      <TouchableOpacity onPress={() => openModal()} style={styles.pauseButton}>
+        <Image
+          source={require('./ryan.png')}
+          style={{
+            borderRadius: 100,
+            height: '100%',
+            width: '100%',
+          }} />
       </TouchableOpacity>
       <PauseMenu isVisible={isModalVisible} onClose={onModalClose}> </PauseMenu>
     </View>
@@ -39,19 +41,17 @@ const styles = StyleSheet.create({
   container: {
     justifyContent: 'center', // to center the pauseButton
     alignItems: 'center',
+    position: 'relative',
+    height:'100%',
+    width:'100%'
   },
   pauseButton: {
     position: 'absolute',
-    backgroundColor: 'pink',
+    backgroundColor: 'white',
     alignSelf: 'center',
-    borderRadius: 42,
-    // width: 50,
-    // height: 50,
+    borderRadius: 100,
     alignItems: 'center',
+    aspectRatio: 1/1,
+    width: '15%',
   },
-  ryan: {
-    borderRadius: '100%',
-    width: 50, 
-    height: 50
-  }
 });
