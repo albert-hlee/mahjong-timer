@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import Player from '../Player/player';
-import { Button, Text, View, StyleSheet, TouchableOpacity, ScrollView, StatusBar, useWindowDimensions } from 'react-native';
-import { Link, Stack } from 'expo-router';
+import { Pressable, Text, View, StyleSheet, TouchableOpacity, StatusBar, useWindowDimensions } from 'react-native';
 
 const Game = ({ starting_increment, starting_bank })  => {
     const [currentTurn, setTurn] = useState(null);
@@ -49,6 +48,8 @@ const Game = ({ starting_increment, starting_bank })  => {
             borderWidth: 1.5,
             transform: [{rotate: `${playerToDirection[player]}deg`}],
             position: 'absolute',
+            flex: 1,
+            flexDirection: 'row',
         }
     }
 
@@ -57,24 +58,40 @@ const Game = ({ starting_increment, starting_bank })  => {
             <StatusBar
             hidden={true}
             />
-
             {startingNumberOfPlayers.map(player => {
                 return (
-                    <TouchableOpacity disabled={!((currentTurn === null) || currentTurn === player)} style={playerStyle(player)} onPress={() => { 
-                        if(currentTurn === null) {
-                            setTurn(player);
-                        } else{
-                            setTurn(playerTurn => (playerTurn + 1) % 4);
-                        }
-                    }}>
-                        <Player 
-                            id={player} 
-                            starting_increment={starting_increment} 
-                            starting_bank={starting_bank} 
-                            endTurnCb={endTurnCb}
-                            my_turn={currentTurn === player}
-                        />
-                    </TouchableOpacity>
+                    <View style={styles.gameContainer}>
+                        <View style={playerStyle(player)}>
+                            <TouchableOpacity disabled={!((currentTurn === null) || currentTurn === player)} style={styles.playerContainer} onPress={() => { 
+                                if(currentTurn === null) {
+                                    setTurn(player);
+                                } else{
+                                    setTurn(playerTurn => (playerTurn + 1) % 4);
+                                }
+                            }}>
+                                <Player 
+                                    id={player} 
+                                    starting_increment={starting_increment} 
+                                    starting_bank={starting_bank} 
+                                    endTurnCb={endTurnCb}
+                                    my_turn={currentTurn === player}
+                                />
+                            </TouchableOpacity>
+
+                            <View style={styles.rightButtonContainer}>
+                                <Pressable style={styles.smallButton}>
+                                    <Text style={styles.smallButtonText}>Pon / Kan</Text>
+                                </Pressable>
+                                <Pressable style={styles.smallButton}>
+                                    <Text style={styles.smallButtonText}>Ron / Tsumo</Text>
+                                </Pressable>
+                                <Pressable style={styles.smallButton}>
+                                    <Text style={styles.smallButtonText}>Chi</Text>
+                                </Pressable>
+                            </View>
+                        </View>
+
+                    </View>
 
                 );
             }
@@ -97,6 +114,29 @@ const styles = StyleSheet.create({
     //     borderColor: 'black', 
     //     borderWidth: 1.5
     //   },
+
+    gameContainer: {
+        flexDirection: 'row', // Ensures left and right sections are side by side
+        alignItems: 'center',
+    },
+    playerContainer: {
+        //TODO: Figure out why the fuck the =player doesn't take up the whole container >:(
+        width: '75%',
+        height: '100%'
+    },
+    rightButtonContainer: {
+        flexDirection: 'column', // Arranges buttons vertically
+        alignItems: 'center',
+        justifyContent: 'center',
+        width: '25%'
+    },
+    smallButton: {
+        backgroundColor: '#ddd',
+        alignItems: 'center',
+        justifyContent: 'center',
+        height: '33%', 
+        width: '100%'
+    },
     parentContainer: {
         width: '100%', 
         height: '100%',
@@ -106,7 +146,6 @@ const styles = StyleSheet.create({
         left: 0,
         height:'50%',
         position: 'absolute',
-        backgroundColor: 'red', 
     }
 
   });
