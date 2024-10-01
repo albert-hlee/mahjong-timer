@@ -20,7 +20,7 @@ const Player = ({ id, starting_increment, starting_bank, endTurnCb, my_turn, pau
                starting_bank={starting_bank} 
                timer_running={my_turn} 
                out_of_time_cb={out_of_time_cb}
-               pause_game_flag={pause_game_flag}
+               is_paused={pause_game_flag}
         />
       </View>
     </Card>

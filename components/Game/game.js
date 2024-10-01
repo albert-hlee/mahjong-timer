@@ -92,7 +92,6 @@ const Game = ({ starting_increment, starting_bank, pause_game_flag })  => {
                                 </Pressable>
                             </View>
                         </View>
-
                     </View>
                 );
             }
