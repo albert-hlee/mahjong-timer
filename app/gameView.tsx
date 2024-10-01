@@ -9,20 +9,23 @@ import { Button } from '@rneui/base';
 
 export default function GameView() {
   const [isModalVisible, setIsModalVisible] = useState(false);
+  const [pauseGameFlag, setPauseGameFlag] = useState(false);
 
   const user = useLocalSearchParams()
 
   const openModal = () => {
+    setPauseGameFlag(true);
     setIsModalVisible(true);
   }
 
   const onModalClose = () => {
     setIsModalVisible(false);
+    setPauseGameFlag(false);
   };
 
   return (
     <View style={styles.container}>
-      <Game starting_increment={user.starting_increment} starting_bank={user.starting_bank}/>
+      <Game starting_increment={user.starting_increment} starting_bank={user.starting_bank} pause_game_flag={pauseGameFlag}/>
       <TouchableOpacity onPress={() => openModal()} style={styles.pauseButton}>
         <Image
           source={require('./ryan.png')}

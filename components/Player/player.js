@@ -5,7 +5,7 @@ import { Card, Icon } from '@rneui/themed';
 
 
 
-const Player = ({ id, starting_increment, starting_bank, endTurnCb, my_turn })  => {
+const Player = ({ id, starting_increment, starting_bank, endTurnCb, my_turn, pause_game_flag })  => {
 
   const out_of_time_cb = () => {
     endTurnCb();
@@ -15,7 +15,13 @@ const Player = ({ id, starting_increment, starting_bank, endTurnCb, my_turn })  
     <Card containerStyle={styles.item}>
       <View style={styles.view}>
         <Text style={styles.item}>Player {id}</Text>
-        <Timer player_id={id} starting_increment={starting_increment} starting_bank={starting_bank} timer_running={my_turn} out_of_time_cb={out_of_time_cb}/>
+        <Timer player_id={id} 
+               starting_increment={starting_increment} 
+               starting_bank={starting_bank} 
+               timer_running={my_turn} 
+               out_of_time_cb={out_of_time_cb}
+               pause_game_flag={pause_game_flag}
+        />
       </View>
     </Card>
     );

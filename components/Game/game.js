@@ -3,8 +3,9 @@ import Player from '../Player/player';
 import { Button, Text, View, StyleSheet, TouchableOpacity, ScrollView, StatusBar, useWindowDimensions } from 'react-native';
 import { Link, Stack } from 'expo-router';
 
-const Game = ({ starting_increment, starting_bank })  => {
+const Game = ({ starting_increment, starting_bank, pause_game_flag })  => {
     const [currentTurn, setTurn] = useState(null);
+    
     const startingNumberOfPlayers = [0, 1, 3, 2];
     const playerToDirection = {
         0: 90,
@@ -60,19 +61,20 @@ const Game = ({ starting_increment, starting_bank })  => {
 
             {startingNumberOfPlayers.map(player => {
                 return (
-                    <TouchableOpacity disabled={!((currentTurn === null) || currentTurn === player)} style={playerStyle(player)} onPress={() => { 
+                    <TouchableOpacity disabled={!((currentTurn === null) || currentTurn === player) && !pause_game_flag} style={playerStyle(player)} onPress={() => { 
                         if(currentTurn === null) {
                             setTurn(player);
                         } else{
                             setTurn(playerTurn => (playerTurn + 1) % 4);
                         }
                     }}>
-                        <Player 
-                            id={player} 
-                            starting_increment={starting_increment} 
-                            starting_bank={starting_bank} 
+                        <Player
+                            id={player}
+                            starting_increment={starting_increment}
+                            starting_bank={starting_bank}
                             endTurnCb={endTurnCb}
                             my_turn={currentTurn === player}
+                            pause_game_flag={pause_game_flag}
                         />
                     </TouchableOpacity>
 
