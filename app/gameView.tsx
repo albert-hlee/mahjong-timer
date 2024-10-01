@@ -1,5 +1,5 @@
 import { useState} from 'react';
-import { Image, StyleSheet, View} from 'react-native';
+import { Image, Pressable, StyleSheet, TouchableHighlight, TouchableOpacity, View} from 'react-native';
 
 import Game from '@/components/Game/game';
 import { Link, useLocalSearchParams } from 'expo-router';
@@ -12,6 +12,10 @@ export default function GameView() {
 
   const user = useLocalSearchParams()
 
+  const openModal = () => {
+    setIsModalVisible(true);
+  }
+
   const onModalClose = () => {
     setIsModalVisible(false);
   };
@@ -23,10 +27,9 @@ export default function GameView() {
   return (
     <View style={styles.container}>
       <Game starting_increment={user.starting_increment} starting_bank={user.starting_bank}/>
-
-      <View style={styles.pauseButton}>
-        <Button onPress={() => showModal()}>P</Button>
-      </View>
+      <TouchableOpacity onPress={() => showModal()} style={styles.pauseButton}>
+        <Image source={require('./ryan.png')} style={styles.ryan} />
+      </TouchableOpacity>
       <PauseMenu isVisible={isModalVisible} onClose={onModalClose}> </PauseMenu>
     </View>
   );
@@ -42,8 +45,13 @@ const styles = StyleSheet.create({
     backgroundColor: 'pink',
     alignSelf: 'center',
     borderRadius: 42,
-    width: 50,
-    height: 50,
+    // width: 50,
+    // height: 50,
     alignItems: 'center',
   },
+  ryan: {
+    borderRadius: '100%',
+    width: 50, 
+    height: 50
+  }
 });

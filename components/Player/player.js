@@ -29,6 +29,7 @@ const styles = StyleSheet.create({
       shadowOffset: { height: 0, width: 0 },
       shadowOpacity: 0,
       shadowRadius: 0,
+    //   transform: [{ rotate: '90deg' }],
       
       elevation: 0, // Remove Shadow for Android
       textAlign: 'center', // <-- the magic

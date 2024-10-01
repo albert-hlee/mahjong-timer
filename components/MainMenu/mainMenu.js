@@ -1,9 +1,9 @@
 import { useState, useEffect } from 'react';
 import Timer from '../Timer/timer';
 
-import { Button, Keyboard, Text, TextInput, TouchableWithoutFeedback, View, ScrollView, StyleSheet } from 'react-native';
+import { Button, Keyboard, Text, TextInput, TouchableWithoutFeedback,TouchableOpacity,  View, ScrollView, StyleSheet } from 'react-native';
 import { Card, Icon } from '@rneui/themed';
-import { Link } from 'expo-router';
+import { Link, useRouter } from 'expo-router';
 
 const MainMenu = ({})  => {
     const [startingNumberOfPlayers, setNumberOfPlayers] = useState(4);
@@ -11,6 +11,18 @@ const MainMenu = ({})  => {
     const [startingPoints, setPoints] = useState(25000);
     const [baseTime, setBaseTime] = useState(20);
     const [incrementTime, setIncrementTime] = useState(5); // default values in mahjong soul kek
+
+    const router = useRouter();
+
+    const handlePress = () => {
+      router.push({
+        pathname: "/gameView",
+        params: {
+          starting_increment: incrementTime,
+          starting_bank: baseTime,
+        },
+      });
+    };
 
     return (
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
@@ -52,41 +64,24 @@ const MainMenu = ({})  => {
             inputMode="numeric"
             keyboardType='numeric'
             type="number">{incrementTime}</TextInput>
+            <TouchableOpacity style={styles.button} onPress={handlePress}>
+              <Text>Start Game</Text>
+            </TouchableOpacity>
 
-            <Link push href={{
-                       pathname: "/gameView",
-                       params:{
-                         starting_increment: incrementTime,
-                         starting_bank: baseTime,
-                       },
+            {/* <Link push href={{
+                pathname: "/gameView",
+                params:{
+                  starting_increment: incrementTime,
+                  starting_bank: baseTime,
+                },
               }}
             >
               Start Game
-            </Link>
+            </Link> */}
 
           </View>
         </Card>
       </TouchableWithoutFeedback>
-      
-    //   <ScrollView>
-    //   <Card containerStyle={styles.item}>
-    //     <View style={styles.view}>
-    //       <Text style={styles.item}>Player 1</Text>
-    //     </View>
-    //   </Card>
-
-    //   <Link push href={{
-    //     pathname: "/gameView",
-    //     params:{
-    //       starting_increment: 5,
-    //       starting_bank: 20,
-    //     },
-    //   }}
-    //   >
-    //   Start Game
-    //   </Link>
-    // </ScrollView>
-
     );
 }
 
@@ -114,6 +109,22 @@ const styles = StyleSheet.create({
       margin: 12,
       borderWidth: 1,
       padding: 10,
+    },
+    title: {
+      textAlign: 'center',
+      fontStyle: 'bold',
+      fontSize: '30'
+    },
+    button: {
+      backgroundColor: '#4CAF50',
+      padding: 10,
+      borderRadius: 5,
+      alignItems: 'center',
+    },
+    buttonText: {
+      color: '#fff',
+      fontSize: 18,
+      fontWeight: 'bold',
     },
   });
   
