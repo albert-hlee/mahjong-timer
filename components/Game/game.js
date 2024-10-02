@@ -1,10 +1,10 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Player from '../Player/player';
 import { Pressable, Text, View, StyleSheet, TouchableOpacity, StatusBar, useWindowDimensions } from 'react-native';
 
-const Game = ({ starting_increment, starting_bank, pause_game_flag })  => {
+const Game = ({ resetGame, startNewGame, starting_increment, starting_bank, pause_game_flag })  => {
     const [currentTurn, setTurn] = useState(null);
-    
+    //TODO: Add wind indicator for given player 
     const startingNumberOfPlayers = [0, 1, 3, 2];
     const playerToDirection = {
         0: 90,
@@ -32,7 +32,6 @@ const Game = ({ starting_increment, starting_bank, pause_game_flag })  => {
     }
 
     const chiDisabledCondition = (player) => {
-        console.log("IS THIS BEING HIT", player)
         return player - currentTurn === 3 || player - currentTurn === -1;
     }
 
@@ -59,6 +58,13 @@ const Game = ({ starting_increment, starting_bank, pause_game_flag })  => {
             flexDirection: 'row',
         }
     }
+
+    useEffect(() => {
+        setTurn(null); // Reset the current turn
+        // TODO: determine whether this is best practice and also figure out how the hell to reset
+        startNewGame(false);
+        // Reset the game state whenever resetTrigger changes
+      }, [resetGame]);
 
     return (
         <View style={styles.parentContainer}>
@@ -87,17 +93,17 @@ const Game = ({ starting_increment, starting_bank, pause_game_flag })  => {
                             </TouchableOpacity>
 
                             <View style={styles.rightButtonContainer}>
-                                <TouchableOpacity style={styles.smallButton} onPress={() => setTurn(player)}>
+                            <TouchableOpacity style={[styles.smallButton, styles.chiButton]} onPress={() => setTurn(player)}>
+                                    <Text style={styles.smallButtonText}>Chi</Text>
+                                </TouchableOpacity>
+                                <TouchableOpacity style={[styles.smallButton, styles.ponKonButton]} onPress={() => setTurn(player)}>
                                     <Text style={styles.smallButtonText}>Pon / Kan</Text>
                                 </TouchableOpacity>
-                                <TouchableOpacity style={styles.smallButton} onPress={() => setTurn(player)}>
-                                    <Text style={styles.smallButtonText}>Ron</Text>
+                                <TouchableOpacity disabled={!(currentTurn === player)} style={[styles.smallButton, styles.riichiButton]} onPress={() => setTurn(playerTurn => (playerTurn + 3) % 4)}>
+                                    <Text style={styles.smallButtonText}>Riichi</Text>
                                 </TouchableOpacity>
-                                <TouchableOpacity style={styles.smallButton} onPress={() => setTurn(player)}>
-                                    <Text style={styles.smallButtonText}>Tsumo</Text>
-                                </TouchableOpacity>
-                                <TouchableOpacity style={styles.smallButton} onPress={() => setTurn(player)}>
-                                    <Text style={styles.smallButtonText}>Chi</Text>
+                                <TouchableOpacity style={[styles.smallButton, styles.ronTsumo]} onPress={() => setTurn(null)}>
+                                    <Text style={styles.smallButtonText}>Ron / Tsumo</Text>
                                 </TouchableOpacity>
                             </View>
                         </View>
@@ -129,6 +135,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     playerContainer: {
+        // backgroundColor: my_turn ? 'green': 'white',
         //TODO: Figure out why the fuck the =player doesn't take up the whole container >:(
         width: '75%',
         height: '100%'
@@ -148,7 +155,20 @@ const styles = StyleSheet.create({
         height: '25%', 
         width: '100%'
     },
+    riichiButton: {
+        backgroundColor: 'orange'
+    },
+    ronTsumo: {
+        backgroundColor: 'red'
+    },
+    chiButton: {
+        backgroundColor: 'blue'
+    },
+    ponKonButton: {
+        backgroundColor: 'purple'
+    },
     smallButtonText: {
+        fontSize: 24,
         color: 'white'
     },
     parentContainer: {
