@@ -5,6 +5,7 @@ export default function RunGame() {
     return (
       <View style={styles.container}>
         <Text style={styles.title}>Mahjong Go! (name subject to change :D)</Text>
+        {/* TODO: Delete link but also consider how this is used for pause reset */}
         {/* <Link style={styles.link} push href="/gameView">Default Game</Link> */}
         <Link style={styles.link} push href="/mainMenu">Main Menu</Link>
       </View>
