@@ -10,6 +10,8 @@ import { Button } from '@rneui/base';
 export default function GameView() {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [pauseGameFlag, setPauseGameFlag] = useState(false);
+  //TODO: make this logic better
+  const [isNewGame, setNewGame] = useState(false);
 
   const user = useLocalSearchParams()
 
@@ -23,9 +25,16 @@ export default function GameView() {
     setPauseGameFlag(false);
   };
 
+  const onReset = () => {
+    console.log("this is being hit for reset")
+    setIsModalVisible(false);
+    setPauseGameFlag(false);
+    setNewGame(true);
+  }
+
   return (
     <View style={styles.container}>
-      <Game starting_increment={user.starting_increment} starting_bank={user.starting_bank} pause_game_flag={pauseGameFlag}/>
+      <Game resetGame={isNewGame} startNewGame={setNewGame} starting_increment={user.starting_increment} starting_bank={user.starting_bank} pause_game_flag={pauseGameFlag}/>
       <TouchableOpacity onPress={() => openModal()} style={styles.pauseButton}>
         <Image
           source={require('./ryan.png')}
@@ -35,7 +44,7 @@ export default function GameView() {
             width: '100%',
           }} />
       </TouchableOpacity>
-      <PauseMenu isVisible={isModalVisible} onClose={onModalClose}> </PauseMenu>
+      <PauseMenu isVisible={isModalVisible} onClose={onModalClose} onReset={onReset}> </PauseMenu>
     </View>
   );
 }
