@@ -9,8 +9,8 @@ const MainMenu = ({})  => {
     const [startingNumberOfPlayers, setNumberOfPlayers] = useState(4);
     const [startingNumberOfRounds, setNumberOfRounds] = useState(4);
     const [startingPoints, setPoints] = useState(25000);
-    const [baseTime, setBaseTime] = useState(20);
-    const [incrementTime, setIncrementTime] = useState(5); // default values in mahjong soul kek
+    const [baseTime, setBaseTime] = useState(60);
+    const [incrementTime, setIncrementTime] = useState(15); // default values in mahjong soul kek
 
     const router = useRouter();
 
