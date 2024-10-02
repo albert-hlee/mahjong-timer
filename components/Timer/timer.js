@@ -6,7 +6,15 @@ const Timer = ({player_id, starting_increment, starting_bank, timer_running, out
     // timer modal will pop up when player time hits 0
     const [current_increment_time, setCurrentIncrementTime] = useState(starting_increment);
     const [bank_time, setBankTime] = useState(starting_bank);
-
+    const styles = StyleSheet.create({
+      timer: {
+        textAlign: 'center', // <-- the magic
+        fontWeight: 'bold',
+        fontSize: 100,
+        // TODO: come up with extra ternary for the black color to default to green if it's that player's turn
+        color: current_increment_time > 0 ? 'black' : 'red'
+    }
+    })
     useEffect(() => {
       if (!is_paused) { 
         if (timer_running) {
@@ -51,11 +59,6 @@ const Timer = ({player_id, starting_increment, starting_bank, timer_running, out
     );
 }
 
-const styles = StyleSheet.create({
-  timer: {
-    textAlign: 'center', // <-- the magic
-    fontWeight: 'bold',
-}
-})
+
 
 export default Timer;
