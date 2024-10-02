@@ -4,7 +4,8 @@ import { Link } from 'expo-router';
 export default function RunGame() {
     return (
       <View style={styles.container}>
-        <Link style={styles.link} push href="/gameView">Default Game</Link>
+        <Text style={styles.title}>Mahjong Go! (name subject to change :D)</Text>
+        {/* <Link style={styles.link} push href="/gameView">Default Game</Link> */}
         <Link style={styles.link} push href="/mainMenu">Main Menu</Link>
       </View>
     );
@@ -17,6 +18,10 @@ export default function RunGame() {
       justifyContent: 'center', // Centers items vertically
       alignItems: 'center',     // Centers items horizontally
       backgroundColor: '#fff',  // Optional: set background color
+    },
+    title: {
+        fontSize: 40,
+        fontWeight: 'bold'
     },
     link: {
       fontSize: 18,             // Optional: set font size
