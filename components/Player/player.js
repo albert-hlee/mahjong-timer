@@ -11,6 +11,31 @@ const Player = ({ id, starting_increment, starting_bank, endTurnCb, my_turn, pau
     endTurnCb();
   };
 
+  const styles = StyleSheet.create({
+    item: {
+      borderWidth: 0, // Remove Border
+
+      shadowColor: 'rgba(0,0,0, 0.0)', // Remove Shadow for iOS
+      shadowOffset: { height: 0, width: 0 },
+      shadowOpacity: 0,
+      shadowRadius: 0,
+      paddingBottom: 75,
+      //TODO: Determine with Richard whether this is best practice for turn color.
+      backgroundColor: my_turn ? 'green' : 'white',
+    //   transform: [{ rotate: '90deg' }],
+      
+      elevation: 0, // Remove Shadow for Android
+      textAlign: 'center', // <-- the magic
+      fontWeight: 'bold',
+    },
+    view: {
+      backgroundColor: 'white',
+      height: "100%",
+      width: "100%",
+    },
+  });
+  
+
     return (
     <Card containerStyle={styles.item}>
       <View style={styles.view}>
@@ -27,26 +52,6 @@ const Player = ({ id, starting_increment, starting_bank, endTurnCb, my_turn, pau
     );
 }
 
-const styles = StyleSheet.create({
-    item: {
-      borderWidth: 0, // Remove Border
 
-      shadowColor: 'rgba(0,0,0, 0.0)', // Remove Shadow for iOS
-      shadowOffset: { height: 0, width: 0 },
-      shadowOpacity: 0,
-      shadowRadius: 0,
-    //   transform: [{ rotate: '90deg' }],
-      
-      elevation: 0, // Remove Shadow for Android
-      textAlign: 'center', // <-- the magic
-      fontWeight: 'bold',
-    },
-    view: {
-      backgroundColor: 'white',
-      height: "100%",
-      width: "100%",
-    },
-  });
-  
 
 export default Player;
