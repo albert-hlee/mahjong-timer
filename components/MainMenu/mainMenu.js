@@ -25,9 +25,9 @@ const MainMenu = ({})  => {
     };
 
     return (
-      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-        <Card containerStyle={styles.item}>
-          <View style={styles.view}>
+      <View style={styles.parentContainer}>
+        <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+          <View style={styles.menu}>
             <Text style={styles.title}>Game Settings</Text>
             <Text style={styles.item}>Starting Number of Players</Text>
             <TextInput
@@ -67,21 +67,9 @@ const MainMenu = ({})  => {
             <TouchableOpacity style={styles.button} onPress={handlePress}>
               <Text>Start Game</Text>
             </TouchableOpacity>
-
-            {/* <Link push href={{
-                pathname: "/gameView",
-                params:{
-                  starting_increment: incrementTime,
-                  starting_bank: baseTime,
-                },
-              }}
-            >
-              Start Game
-            </Link> */}
-
           </View>
-        </Card>
-      </TouchableWithoutFeedback>
+        </TouchableWithoutFeedback>
+      </View>
     );
 }
 
@@ -99,8 +87,13 @@ const styles = StyleSheet.create({
       textAlign: 'center', // <-- the magic
       fontWeight: 'bold',
     },
-    view: {
+    parentContainer: {
       backgroundColor: 'white',
+      height: "100%",
+      width: "100%",
+      padding: '10%',
+    },
+    menu: {
       height: "100%",
       width: "100%",
     },

@@ -10,6 +10,11 @@ import { useColorScheme } from '@/hooks/useColorScheme';
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
 
+export const unstable_settings = {
+  // Ensure any route can link back to `/`
+  initialRouteName: 'index',
+};
+
 export default function RootLayout() {
   const colorScheme = useColorScheme();
   const [loaded] = useFonts({
@@ -30,6 +35,12 @@ export default function RootLayout() {
     <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
       <Stack screenOptions={{headerShown:false, animation: 'none'}}>
         <Stack.Screen name="index" options={{ headerShown: false }} />
+        <Stack.Screen name="mainMenu" options={{ headerShown: false }} />
+        <Stack.Screen name="gameView" options={{ headerShown: false }} />
+        <Stack.Screen
+          name="pauseModal"  
+          options={{ presentation: 'modal'}} // This makes it a modal
+        />
       </Stack>
     </ThemeProvider>
   );

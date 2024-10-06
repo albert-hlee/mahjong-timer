@@ -2,7 +2,7 @@ import { useState} from 'react';
 import { Image, StyleSheet, TouchableOpacity, View} from 'react-native';
 
 import Game from '@/components/Game/game';
-import { Link, useLocalSearchParams } from 'expo-router';
+import { Link, useLocalSearchParams, router } from 'expo-router';
 
 import PauseMenu from './pauseModal';
 import { Button } from '@rneui/base';
@@ -10,31 +10,24 @@ import { Button } from '@rneui/base';
 export default function GameView() {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [pauseGameFlag, setPauseGameFlag] = useState(false);
-  //TODO: make this logic better
-  const [isNewGame, setNewGame] = useState(false);
 
   const user = useLocalSearchParams()
 
   const openModal = () => {
+    console.log("open")
     setPauseGameFlag(true);
     setIsModalVisible(true);
   }
 
   const onModalClose = () => {
+    console.log("close")
     setIsModalVisible(false);
     setPauseGameFlag(false);
   };
 
-  const onReset = () => {
-    console.log("this is being hit for reset")
-    setIsModalVisible(false);
-    setPauseGameFlag(false);
-    setNewGame(true);
-  }
-
   return (
     <View style={styles.container}>
-      <Game resetGame={isNewGame} startNewGame={setNewGame} starting_increment={user.starting_increment} starting_bank={user.starting_bank} pause_game_flag={pauseGameFlag}/>
+      <Game starting_increment={user.starting_increment} starting_bank={user.starting_bank} pause_game_flag={pauseGameFlag}/>
       <TouchableOpacity onPress={() => openModal()} style={styles.pauseButton}>
         <Image
           source={require('./ryan.png')}
@@ -44,7 +37,7 @@ export default function GameView() {
             width: '100%',
           }} />
       </TouchableOpacity>
-      <PauseMenu isVisible={isModalVisible} onClose={onModalClose} onReset={onReset}> </PauseMenu>
+      <PauseMenu isVisible={isModalVisible} onClose={onModalClose}> </PauseMenu>
     </View>
   );
 }

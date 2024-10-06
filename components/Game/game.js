@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import Player from '../Player/player';
 import { Pressable, Text, View, StyleSheet, TouchableOpacity, StatusBar, useWindowDimensions } from 'react-native';
 
-const Game = ({ resetGame, startNewGame, starting_increment, starting_bank, pause_game_flag })  => {
+const Game = ({ starting_increment, starting_bank, pause_game_flag })  => {
     const [currentTurn, setTurn] = useState(null);
     //TODO: Add wind indicator for given player 
     const startingNumberOfPlayers = [0, 1, 3, 2];
@@ -59,18 +59,8 @@ const Game = ({ resetGame, startNewGame, starting_increment, starting_bank, paus
         }
     }
 
-    useEffect(() => {
-        setTurn(null); // Reset the current turn
-        // TODO: determine whether this is best practice and also figure out how the hell to reset
-        startNewGame(false);
-        // Reset the game state whenever resetTrigger changes
-      }, [resetGame]);
-
     return (
         <View style={styles.parentContainer}>
-            <StatusBar
-            hidden={true}
-            />
             {startingNumberOfPlayers.map(player => {
                 return (
                     <View style={styles.gameContainer}>
@@ -111,25 +101,11 @@ const Game = ({ resetGame, startNewGame, starting_increment, starting_bank, paus
                 );
             }
         )}
-
         </View>
-
- 
-
     );
 }
 
 const styles = StyleSheet.create({
-    // button: { 
-    //     width: '50%', 
-    //     height: '50%', 
-    //     margin: '0', 
-    //     padding: '0', 
-    //     backgroundColor: 'white', 
-    //     borderColor: 'black', 
-    //     borderWidth: 1.5
-    //   },
-
     gameContainer: {
         flexDirection: 'row', // Ensures left and right sections are side by side
         alignItems: 'center',
