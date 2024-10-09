@@ -42,7 +42,7 @@ const Game = ({ starting_increment, starting_bank, pause_game_flag }) => {
   };
 
   const chiDisabledCondition = (player) => {
-    return player - currentTurn === 3 || player - currentTurn === -1;
+    return !(currentTurn - player === 1 || player - currentTurn == 3);
   };
 
   const smallButtonText = {
@@ -79,8 +79,7 @@ const Game = ({ starting_increment, starting_bank, pause_game_flag }) => {
             <View style={styles.leftPlayerContainer}>
               <TouchableOpacity
                 disabled={
-                  !(currentTurn === null || currentTurn === player) &&
-                  !pause_game_flag
+                  !(currentTurn === null || currentTurn === player)
                 }
                 onPress={() => {
                   if (currentTurn === null) {
@@ -103,6 +102,7 @@ const Game = ({ starting_increment, starting_bank, pause_game_flag }) => {
             <View style={styles.rightButtonContainer}>
               <TouchableOpacity
                 style={[styles.smallButton, styles.chiButton]}
+                disabled={chiDisabledCondition(player)}
                 onPress={() => setTurn(player)}
               >
                 <Text style={smallButtonText}>Chi</Text>
