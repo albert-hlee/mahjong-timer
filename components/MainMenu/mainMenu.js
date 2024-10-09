@@ -93,14 +93,14 @@ const MainMenu = () => {
   );
 };
 
-const green = "#4CAF50";
+const $green = "#4CAF50";
 const fullyTransparent = "rgba(0,0,0, 0.0)";
 const white = "white";
 
 const styles = StyleSheet.create({
   button: {
     alignItems: "center",
-    backgroundColor: { green }, // TODO: This doesn't show as green
+    backgroundColor: $green, // TODO: This doesn't show as green
     borderRadius: 5,
     padding: 10,
   },
