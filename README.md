@@ -17,7 +17,7 @@ A physical timer for 4 player east Riichi (with plans to expand to 3 player East
    ```
 
 npm init @eslint/config
-
+To support VSCode linting - install the ESLint plugin
 
 ## Credits
 

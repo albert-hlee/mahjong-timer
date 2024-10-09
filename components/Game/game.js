@@ -1,15 +1,14 @@
-import { useEffect, useState } from "react";
+import { React, useState } from "react";
 import {
-  Pressable,
   Text,
   View,
   StyleSheet,
   TouchableOpacity,
-  StatusBar,
   useWindowDimensions,
 } from "react-native";
 import Player from "../Player/player";
 
+// eslint-disable-next-line react/prop-types
 const Game = ({ starting_increment, starting_bank, pause_game_flag }) => {
   const [currentTurn, setTurn] = useState(null);
   const { height, width } = useWindowDimensions();
@@ -61,7 +60,7 @@ const Game = ({ starting_increment, starting_bank, pause_game_flag }) => {
       height: width / 2,
       justifyContent: "center",
       alignItems: "center",
-      backgroundColor: 'white',
+      backgroundColor: "white",
       borderColor: "black",
       borderWidth: 1.5,
       transform: [{ rotate: `${playerToDirection[player]}deg` }],
@@ -73,14 +72,12 @@ const Game = ({ starting_increment, starting_bank, pause_game_flag }) => {
 
   return (
     <View style={styles.parentContainer}>
-      {startingNumberOfPlayers.map((player) => {
+      {startingNumberOfPlayers.map(player => {
         return (
-          <View style={playerContainerStyle(player)}>
+          <View key={player} style={playerContainerStyle(player)}>
             <View style={styles.leftPlayerContainer}>
               <TouchableOpacity
-                disabled={
-                  !(currentTurn === null || currentTurn === player)
-                }
+                disabled={!(currentTurn === null || currentTurn === player)}
                 onPress={() => {
                   if (currentTurn === null) {
                     setTurn(player);
@@ -97,7 +94,7 @@ const Game = ({ starting_increment, starting_bank, pause_game_flag }) => {
                   my_turn={currentTurn === player}
                   pause_game_flag={pause_game_flag}
                 />
-            </TouchableOpacity>
+              </TouchableOpacity>
             </View>
             <View style={styles.rightButtonContainer}>
               <TouchableOpacity
@@ -116,9 +113,7 @@ const Game = ({ starting_increment, starting_bank, pause_game_flag }) => {
               <TouchableOpacity
                 disabled={!(currentTurn === player)}
                 style={[styles.smallButton, styles.riichiButton]}
-                onPress={() =>
-                  setTurn((playerTurn) => (playerTurn + 3) % 4)
-                }
+                onPress={() => setTurn((playerTurn) => (playerTurn + 3) % 4)}
               >
                 <Text style={smallButtonText}>Riichi</Text>
               </TouchableOpacity>
@@ -138,7 +133,7 @@ const Game = ({ starting_increment, starting_bank, pause_game_flag }) => {
 
 const styles = StyleSheet.create({
   leftPlayerContainer: {
-    backgroundColor: 'transparent',
+    backgroundColor: "transparent",
     //TODO: Figure out why the fuck the =player doesn't take up the whole container >:(
     width: "75%",
     height: "100%",
@@ -174,9 +169,9 @@ const styles = StyleSheet.create({
   //     color: 'white'
   // },
   parentContainer: {
+    backgroundColor: "#F5F5F5",
     height: "100%",
     width: "100%",
-    backgroundColor: "#F5F5F5",
   },
 });
 

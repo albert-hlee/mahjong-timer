@@ -1,20 +1,19 @@
-import { useState, useEffect } from "react";
+import { React, useState, useEffect } from "react";
 import {
-  Button,
   useWindowDimensions,
   Text,
   View,
-  TouchableOpacity,
   StyleSheet,
 } from "react-native";
+import PropTypes from 'prop-types'
 
 const Timer = ({
-  player_id,
-  starting_increment,
-  starting_bank,
-  timer_running,
-  out_of_time_cb,
-  is_paused,
+  player_id, 
+  starting_increment, 
+  starting_bank, 
+  timer_running, 
+  out_of_time_cb, 
+  is_paused
 }) => {
   // timer modal will pop up when player time hits 0
   const [current_increment_time, setCurrentIncrementTime] =
@@ -23,7 +22,7 @@ const Timer = ({
 
 
   // Styles
-  const { height, width } = useWindowDimensions();
+  const width = useWindowDimensions().width;
   const isTablet = width >= 768; // Example tablet breakpoint
 
   const styles = StyleSheet.create({
@@ -34,6 +33,11 @@ const Timer = ({
       backgroundColor: "transparent",
       // TODO: come up with extra ternary for the black color to default to green if it's that player's turn
       color: current_increment_time > 0 ? (timer_running ? 'white': 'black') : "#F7A4A4",
+    },
+    timerContainer: {
+      width: "100%",
+      height: "100%",
+      backgroundColor: 'transparent',
     },
   });
 
@@ -81,12 +85,13 @@ const Timer = ({
   );
 };
 
-const styles = StyleSheet.create({
-  timerContainer: {
-    width: "100%",
-    height: "100%",
-    backgroundColor: 'blue',
-  },
-});
+Timer.propTypes = {
+  player_id: PropTypes.number,
+  starting_increment: PropTypes.number,
+  starting_bank: PropTypes.number,
+  timer_running: PropTypes.number,
+  out_of_time_cb: PropTypes.func,
+  is_paused: PropTypes.bool,
+}
 
 export default Timer;

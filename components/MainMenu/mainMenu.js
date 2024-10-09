@@ -1,21 +1,17 @@
-import { useState, useEffect } from "react";
+import { React, useState } from "react";
 
 import {
-  Button,
   Keyboard,
   Text,
   TextInput,
   TouchableWithoutFeedback,
   TouchableOpacity,
   View,
-  ScrollView,
   StyleSheet,
 } from "react-native";
-import { Card, Icon } from "@rneui/themed";
-import { Link, useRouter } from "expo-router";
-import Timer from "../Timer/timer";
+import { useRouter } from "expo-router";
 
-const MainMenu = ({}) => {
+const MainMenu = () => {
   const [startingNumberOfPlayers, setNumberOfPlayers] = useState(4);
   const [startingNumberOfRounds, setNumberOfRounds] = useState(4);
   const [startingPoints, setPoints] = useState(25000);
@@ -97,17 +93,16 @@ const MainMenu = ({}) => {
   );
 };
 
+const green = "#4CAF50";
+const fullyTransparent = "rgba(0,0,0, 0.0)";
+const white = "white";
+
 const styles = StyleSheet.create({
   button: {
     alignItems: "center",
-    backgroundColor: "#4CAF50",
+    backgroundColor: { green }, // TODO: This doesn't show as green
     borderRadius: 5,
     padding: 10,
-  },
-  buttonText: {
-    color: "#fff",
-    fontSize: 18,
-    fontWeight: "bold",
   },
   input: {
     borderWidth: 1,
@@ -117,22 +112,22 @@ const styles = StyleSheet.create({
   },
   item: {
     borderWidth: 0, // Remove Border
+    elevation: 0, // Remove Shadow for Android
+    fontWeight: "bold",
 
-    shadowColor: "rgba(0,0,0, 0.0)", // Remove Shadow for iOS
+    shadowColor: { fullyTransparent }, // Remove Shadow for iOS
     shadowOffset: { height: 0, width: 0 },
     shadowOpacity: 0,
     shadowRadius: 0,
 
-    elevation: 0, // Remove Shadow for Android
     textAlign: "center", // <-- the magic
-    fontWeight: "bold",
   },
   menu: {
     height: "100%",
     width: "100%",
   },
   parentContainer: {
-    backgroundColor: "white",
+    backgroundColor: { white },
     height: "100%",
     padding: "10%",
     width: "100%",
