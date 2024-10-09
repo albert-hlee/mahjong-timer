@@ -2,7 +2,7 @@ import { Link } from 'expo-router';
 import { View, StyleSheet, Text, Pressable, Modal, PixelRatio } from 'react-native';
 
 const fontScale = PixelRatio.getFontScale();
-const getFontSize = (size: number) => size / fontScale;
+const getFontSize = (size: number) => size / fontScale; // TODO(rxu): replace with breakpoints
 
 // TODO: specify the types to boolean and function
 export default function PauseMenu( {isVisible, onClose} : any ) {
@@ -39,6 +39,8 @@ const styles = StyleSheet.create({
     paddingTop: '15%',
     paddingBottom: '15%',
     borderRadius: 25,
+    borderWidth: 2,
+    borderColor: 'black',
     backgroundColor: '#e0d6ff',
     alignItems: 'center',
     justifyContent: 'center',

@@ -24,11 +24,11 @@ export default function GameView() {
   };
 
   return (
-    <View style={styles.container}>
+    <View style={styles.gameContainer}>
       <Game starting_increment={user.starting_increment} starting_bank={user.starting_bank} pause_game_flag={pauseGameFlag}/>
       <TouchableOpacity onPress={() => openModal()} style={styles.pauseButton}>
         <Image
-          source={require('./ryan.png')}
+          source={require('../assets/images/winds/East.png')} // TODO: change wind based on round
           style={{
             borderRadius: 100,
             height: '100%',
@@ -41,7 +41,7 @@ export default function GameView() {
 }
 
 const styles = StyleSheet.create({
-  container: {
+  gameContainer: {
     justifyContent: 'center', // to center the pauseButton
     alignItems: 'center',
     position: 'relative',
