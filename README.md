@@ -16,6 +16,9 @@ A physical timer for 4 player east Riichi (with plans to expand to 3 player East
     npx expo start
    ```
 
+npm init @eslint/config
+
+
 ## Credits
 
 Made by Albert Lee and Richard Xu

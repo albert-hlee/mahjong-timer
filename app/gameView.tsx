@@ -14,13 +14,11 @@ export default function GameView() {
   const user = useLocalSearchParams()
 
   const openModal = () => {
-    console.log("open")
     setPauseGameFlag(true);
     setIsModalVisible(true);
   }
 
   const onModalClose = () => {
-    console.log("close")
     setIsModalVisible(false);
     setPauseGameFlag(false);
   };

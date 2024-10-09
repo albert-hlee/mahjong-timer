@@ -20,20 +20,24 @@ const Timer = ({
   const [current_increment_time, setCurrentIncrementTime] =
     useState(starting_increment);
   const [bank_time, setBankTime] = useState(starting_bank);
+
+
+  // Styles
   const { height, width } = useWindowDimensions();
   const isTablet = width >= 768; // Example tablet breakpoint
-  const isMyTurn = timer_running ? 'white': 'black'
 
   const styles = StyleSheet.create({
     timer: {
       textAlign: "center", // <-- the magic
       fontWeight: "bold",
       fontSize: isTablet ? "100" : "40",
-      backgroundColor: timer_running ? "green" : "white",
+      backgroundColor: "transparent",
       // TODO: come up with extra ternary for the black color to default to green if it's that player's turn
-      color: current_increment_time > 0 ? isMyTurn : "red",
+      color: current_increment_time > 0 ? (timer_running ? 'white': 'black') : "#F7A4A4",
     },
   });
+
+
   useEffect(() => {
     if (!is_paused) {
       if (timer_running) {
@@ -65,7 +69,7 @@ const Timer = ({
   };
 
   return (
-    <View>
+    <View style={styles.timerContainer}>
       {current_increment_time > 0 && timer_running ? (
         <Text style={styles.timer}>
           {current_increment_time} + {bank_time}
@@ -76,5 +80,13 @@ const Timer = ({
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  timerContainer: {
+    width: "100%",
+    height: "100%",
+    backgroundColor: 'blue',
+  },
+});
 
 export default Timer;

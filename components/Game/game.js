@@ -47,12 +47,11 @@ const Game = ({ starting_increment, starting_bank, pause_game_flag }) => {
 
   const smallButtonText = {
     fontSize: isTablet ? 24 : 14,
-    color: "white",
+    color: "black",
     fontWeight: "bold",
   };
 
-  const playerStyle = function (player) {
-    // eslint-disable-next-line react-hooks/rules-of-hooks
+  const playerContainerStyle = function (player) {
     const x = playerToLocationX[player];
     const y = playerToLocationY[player];
     return {
@@ -62,9 +61,7 @@ const Game = ({ starting_increment, starting_bank, pause_game_flag }) => {
       height: width / 2,
       justifyContent: "center",
       alignItems: "center",
-      // margin: '0',
-      // padding: '0',
-      backgroundColor: currentTurn === player ? "green" : "white",
+      backgroundColor: 'white',
       borderColor: "black",
       borderWidth: 1.5,
       transform: [{ rotate: `${playerToDirection[player]}deg` }],
@@ -78,60 +75,59 @@ const Game = ({ starting_increment, starting_bank, pause_game_flag }) => {
     <View style={styles.parentContainer}>
       {startingNumberOfPlayers.map((player) => {
         return (
-          <View style={styles.gameContainer}>
-            <View style={playerStyle(player)}>
-            <TouchableOpacity
-                    disabled={
-                      !(currentTurn === null || currentTurn === player) &&
-                      !pause_game_flag
-                    }
-                    style={styles.playerContainer}
-                    onPress={() => {
-                      if (currentTurn === null) {
-                        setTurn(player);
-                      } else {
-                        setTurn((playerTurn) => (playerTurn + 3) % 4);
-                      }
-                    }}
-                  >
-                    <Player
-                      id={player}
-                      starting_increment={starting_increment}
-                      starting_bank={starting_bank}
-                      endTurnCb={endTurnCb}
-                      my_turn={currentTurn === player}
-                      pause_game_flag={pause_game_flag}
-                    />
-                  </TouchableOpacity>
-                  <View style={styles.rightButtonContainer}>
-                    <TouchableOpacity
-                      style={[styles.smallButton, styles.chiButton]}
-                      onPress={() => setTurn(player)}
-                    >
-                      <Text style={smallButtonText}>Chi</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity
-                      style={[styles.smallButton, styles.ponKonButton]}
-                      onPress={() => setTurn(player)}
-                    >
-                      <Text style={smallButtonText}>Pon / Kan</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity
-                      disabled={!(currentTurn === player)}
-                      style={[styles.smallButton, styles.riichiButton]}
-                      onPress={() =>
-                        setTurn((playerTurn) => (playerTurn + 3) % 4)
-                      }
-                    >
-                      <Text style={smallButtonText}>Riichi</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity
-                      style={[styles.smallButton, styles.ronTsumo]}
-                      onPress={() => setTurn(null)}
-                    >
-                      <Text style={smallButtonText}>Ron / Tsumo</Text>
-                    </TouchableOpacity>
-                  </View>
+          <View style={playerContainerStyle(player)}>
+            <View style={styles.leftPlayerContainer}>
+              <TouchableOpacity
+                disabled={
+                  !(currentTurn === null || currentTurn === player) &&
+                  !pause_game_flag
+                }
+                onPress={() => {
+                  if (currentTurn === null) {
+                    setTurn(player);
+                  } else {
+                    setTurn((playerTurn) => (playerTurn + 3) % 4);
+                  }
+                }}
+              >
+                <Player
+                  id={player}
+                  starting_increment={starting_increment}
+                  starting_bank={starting_bank}
+                  endTurnCb={endTurnCb}
+                  my_turn={currentTurn === player}
+                  pause_game_flag={pause_game_flag}
+                />
+            </TouchableOpacity>
+            </View>
+            <View style={styles.rightButtonContainer}>
+              <TouchableOpacity
+                style={[styles.smallButton, styles.chiButton]}
+                onPress={() => setTurn(player)}
+              >
+                <Text style={smallButtonText}>Chi</Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={[styles.smallButton, styles.ponKonButton]}
+                onPress={() => setTurn(player)}
+              >
+                <Text style={smallButtonText}>Pon / Kan</Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                disabled={!(currentTurn === player)}
+                style={[styles.smallButton, styles.riichiButton]}
+                onPress={() =>
+                  setTurn((playerTurn) => (playerTurn + 3) % 4)
+                }
+              >
+                <Text style={smallButtonText}>Riichi</Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={[styles.smallButton, styles.ronTsumo]}
+                onPress={() => setTurn(null)}
+              >
+                <Text style={smallButtonText}>Ron / Tsumo</Text>
+              </TouchableOpacity>
             </View>
           </View>
         );
@@ -141,12 +137,8 @@ const Game = ({ starting_increment, starting_bank, pause_game_flag }) => {
 };
 
 const styles = StyleSheet.create({
-  gameContainer: {
-    flexDirection: "row", // Ensures left and right sections are side by side
-    alignItems: "center",
-  },
-  playerContainer: {
-    // backgroundColor: my_turn ? 'green': 'white',
+  leftPlayerContainer: {
+    backgroundColor: 'transparent',
     //TODO: Figure out why the fuck the =player doesn't take up the whole container >:(
     width: "75%",
     height: "100%",
@@ -166,16 +158,16 @@ const styles = StyleSheet.create({
     width: "100%",
   },
   riichiButton: {
-    backgroundColor: "orange",
+    backgroundColor: "#FEBE8C",
   },
   ronTsumo: {
-    backgroundColor: "red",
+    backgroundColor: "#FAE3D9",
   },
   chiButton: {
-    backgroundColor: "blue",
+    backgroundColor: "#B0C4DE",
   },
   ponKonButton: {
-    backgroundColor: "purple",
+    backgroundColor: "#FFFBC1",
   },
   // smallButtonText: {
   //     fontSize: isTablet ? 24 : 16,
@@ -184,12 +176,7 @@ const styles = StyleSheet.create({
   parentContainer: {
     height: "100%",
     width: "100%",
-  },
-  test: {
-    height: "50%",
-    left: 0,
-    position: "absolute",
-    top: 0,
+    backgroundColor: "#F5F5F5",
   },
 });
 
