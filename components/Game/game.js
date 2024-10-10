@@ -6,6 +6,8 @@ import {
   TouchableOpacity,
   useWindowDimensions,
 } from "react-native";
+import PropTypes from 'prop-types'
+
 import Player from "../Player/player";
 
 // eslint-disable-next-line react/prop-types
@@ -174,5 +176,11 @@ const styles = StyleSheet.create({
     width: "100%",
   },
 });
+
+Game.propTypes = {
+  starting_increment: PropTypes.number, 
+  starting_bank: PropTypes.number,
+  pause_game_flag: PropTypes.bool,
+}
 
 export default Game;

@@ -5,13 +5,18 @@ import Game from '@/components/Game/game';
 import { Link, useLocalSearchParams, router } from 'expo-router';
 
 import PauseMenu from './pauseModal';
-import { Button } from '@rneui/base';
 
 export default function GameView() {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [pauseGameFlag, setPauseGameFlag] = useState(false);
 
-  const user = useLocalSearchParams()
+  // Router SearchParamType must extend type SearchParams = Record<string, string | string[]>;. 
+  // Therefore you can not type number type. useLocalSearchParams only supports string or string[]
+  const user = useLocalSearchParams<{ starting_increment: string; starting_bank: string }>();
+  // So we can convert right after
+  const starting_increment = parseInt(user.starting_increment)
+  const starting_bank = parseInt(user.starting_bank)
+  // TODO(Rxu): maybe add a default value in case starting_increment and starting_bank arent parsable
 
   const openModal = () => {
     setPauseGameFlag(true);
@@ -25,7 +30,7 @@ export default function GameView() {
 
   return (
     <View style={styles.gameContainer}>
-      <Game starting_increment={user.starting_increment} starting_bank={user.starting_bank} pause_game_flag={pauseGameFlag}/>
+      <Game starting_increment={starting_increment} starting_bank={starting_bank} pause_game_flag={pauseGameFlag}/>
       <TouchableOpacity onPress={() => openModal()} style={styles.pauseButton}>
         <Image
           source={require('../assets/images/winds/East.png')} // TODO: change wind based on round

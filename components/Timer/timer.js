@@ -89,7 +89,7 @@ Timer.propTypes = {
   player_id: PropTypes.number,
   starting_increment: PropTypes.number,
   starting_bank: PropTypes.number,
-  timer_running: PropTypes.number,
+  timer_running: PropTypes.bool,
   out_of_time_cb: PropTypes.func,
   is_paused: PropTypes.bool,
 }
