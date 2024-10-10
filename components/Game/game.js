@@ -1,5 +1,6 @@
 import { React, useState } from "react";
 import {
+  Image,
   Text,
   View,
   StyleSheet,
@@ -9,12 +10,28 @@ import {
 import PropTypes from 'prop-types'
 
 import Player from "../Player/player";
+import PauseMenu from '../PauseModal/pauseModal';
 
-// eslint-disable-next-line react/prop-types
-const Game = ({ starting_increment, starting_bank, pause_game_flag }) => {
+const Game = ({ starting_increment, starting_bank }) => {
   const [currentTurn, setTurn] = useState(null);
-  const { height, width } = useWindowDimensions();
-  const isTablet = width >= 768;
+  // const round = useState(1);
+
+
+  const [isPauseModalVisible, setIsPauseModalVisible] = useState(false);
+  const [pauseGameFlag, setPauseGameFlag] = useState(false);
+
+  const openModal = () => {
+    setPauseGameFlag(true);
+    setIsPauseModalVisible(true);
+  }
+
+  const onModalClose = () => {
+    setIsPauseModalVisible(false);
+    setPauseGameFlag(false);
+  };
+
+
+
   //TODO: Add wind indicator for given player
   const startingNumberOfPlayers = [0, 1, 3, 2];
   const playerToDirection = {
@@ -46,6 +63,10 @@ const Game = ({ starting_increment, starting_bank, pause_game_flag }) => {
     return !(currentTurn - player === 1 || player - currentTurn == 3);
   };
 
+  const { height, width } = useWindowDimensions();
+  const isTablet = width >= 768;
+
+  // Should we move stylesheets into the component itself?
   const smallButtonText = {
     fontSize: isTablet ? 24 : 14,
     color: "black",
@@ -94,7 +115,7 @@ const Game = ({ starting_increment, starting_bank, pause_game_flag }) => {
                   starting_bank={starting_bank}
                   endTurnCb={endTurnCb}
                   my_turn={currentTurn === player}
-                  pause_game_flag={pause_game_flag}
+                  pause_game_flag={pauseGameFlag}
                 />
               </TouchableOpacity>
             </View>
@@ -129,6 +150,19 @@ const Game = ({ starting_increment, starting_bank, pause_game_flag }) => {
           </View>
         );
       })}
+
+      <TouchableOpacity onPress={() => openModal()} style={styles.pauseButton}>
+        <Image
+          // TODO: why does eslint not like require?
+Z          source={'./assets/images/winds/East.png'} // TODO: change wind based on round
+          style={{
+            borderRadius: 100,
+            height: '100%',
+            width: '100%',
+          }} />
+      </TouchableOpacity>
+      <PauseMenu isVisible={isPauseModalVisible} onClose={onModalClose}> </PauseMenu>
+
     </View>
   );
 };
@@ -166,21 +200,28 @@ const styles = StyleSheet.create({
   ponKonButton: {
     backgroundColor: "#FFFBC1",
   },
-  // smallButtonText: {
-  //     fontSize: isTablet ? 24 : 16,
-  //     color: 'white'
-  // },
   parentContainer: {
     backgroundColor: "#F5F5F5",
     height: "100%",
     width: "100%",
+    justifyContent: 'center', // to center the pauseButton
+    alignItems: 'center',
+    position: 'relative',
+  },
+  pauseButton: {
+    position: 'absolute',
+    backgroundColor: 'white',
+    alignSelf: 'center',
+    borderRadius: 100,
+    alignItems: 'center',
+    aspectRatio: 1/1,
+    width: '15%',
   },
 });
 
 Game.propTypes = {
   starting_increment: PropTypes.number, 
   starting_bank: PropTypes.number,
-  pause_game_flag: PropTypes.bool,
 }
 
 export default Game;

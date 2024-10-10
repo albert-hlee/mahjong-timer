@@ -1,11 +1,12 @@
 import { Link } from 'expo-router';
-import { View, StyleSheet, Text, Pressable, Modal, PixelRatio } from 'react-native';
+import { React, View, StyleSheet, Text, Pressable, Modal, PixelRatio } from 'react-native';
+import PropTypes from 'prop-types'
 
 const fontScale = PixelRatio.getFontScale();
-const getFontSize = (size: number) => size / fontScale; // TODO(rxu): replace with breakpoints
+const getFontSize = (size) => size / fontScale; // TODO(rxu): replace with breakpoints
 
 // TODO: specify the types to boolean and function
-export default function PauseMenu( {isVisible, onClose} : any ) {
+const PauseMenu = ({ isVisible, onClose }) => {
 
   return (
     <Modal
@@ -56,3 +57,11 @@ const styles = StyleSheet.create({
     padding: 30,              // Optional: add padding around the links
   },
 });
+
+PauseMenu.propTypes = {
+  isVisible: PropTypes.bool, 
+  onClose: PropTypes.func,
+}
+
+
+export default PauseMenu;
