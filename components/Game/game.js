@@ -11,6 +11,7 @@ import PropTypes from 'prop-types'
 
 import Player from "../Player/player";
 import PauseMenu from '../PauseModal/pauseModal';
+import WinModal from '../WinModal/winModal';
 
 const Game = ({ starting_increment, starting_bank }) => {
   const [currentTurn, setTurn] = useState(null);
@@ -19,18 +20,56 @@ const Game = ({ starting_increment, starting_bank }) => {
   const [roundWindIndex, setRoundWindIndex] = useState(0); // The round wind [East, South, West, North]
   const [roundNumber, setRoundNumber] = useState(1); // Turn number within the wind [1,4]
 
+  // TODO: change formatting and player information to use player type
+  type Player = {
+    id: number,
+    wind: string,
+    // TODO: Add formatting information
+  }
+
+  // ------------------------- For Win Modal -------------------------
   const [isPauseModalVisible, setIsPauseModalVisible] = useState(false);
   const [pauseGameFlag, setPauseGameFlag] = useState(false);
 
-  const openModal = () => {
+  const openPauseModal = () => {
     setPauseGameFlag(true);
     setIsPauseModalVisible(true);
   }
 
-  const onModalClose = () => {
+  const onPauseModalClose = () => {
     setIsPauseModalVisible(false);
     setPauseGameFlag(false);
   };
+
+  // ------------------------- For Win Modal -------------------------
+  const [isWinModalVisible, setIsWinModalVisible] = useState(false);
+  const [winners, setWinners] = useState([]);
+
+  const onWinModalClose = () => {
+    setWinners([]);
+    setIsWinModalVisible(false);
+    setPauseGameFlag(false);
+  };
+
+  // TODO: add a 5s timer to allow for multiple Rons
+  // The loser is implicitly the player who's current turn it is. We will also define Ron vs Tsumo based on that.
+  const playerWin = (winner) => {
+    winners.push(winner)
+
+    console.log(winners)
+    console.log(typeof winners)
+    // TODO: Add logic for limiting east game/ south game
+    if(roundNumber < 4){
+      setRoundNumber((roundNumber) => roundNumber + 1)
+    } else{
+      setRoundWindIndex((roundWindIndex) => roundWindIndex + 1)
+      setRoundNumber(0)
+    }
+    setIsWinModalVisible(true);
+    setPauseGameFlag(true);
+
+    setTurn(null);
+  }
 
   //TODO: Add wind indicator for given player
   const startingNumberOfPlayers = [0, 1, 3, 2];
@@ -72,19 +111,6 @@ const Game = ({ starting_increment, starting_bank }) => {
     color: "black",
     fontWeight: "bold",
   };
-
-  // TODO: add new modal for winning the game
-  const playerWin = (player) => {
-    console.log(player, "won");
-    // TODO: Add logic for limiting east game/ south game
-    if(roundNumber < 4){
-      setRoundNumber((roundNumber) => roundNumber + 1)
-    } else{
-      setRoundWindIndex((roundWindIndex) => roundWindIndex + 1)
-      setRoundNumber(0)
-    }
-    setTurn(null);
-  }
 
   const playerContainerStyle = function (player) {
     const x = playerToLocationX[player];
@@ -164,10 +190,11 @@ const Game = ({ starting_increment, starting_bank }) => {
         );
       })}
 
-      <TouchableOpacity onPress={() => openModal()} style={styles.pauseButton}>
+      <TouchableOpacity onPress={() => openPauseModal()} style={styles.pauseButton}>
         <Image
           // TODO: why does eslint not like require?
-Z         source={'./assets/images/winds/East.png'} // TODO: change wind based on round
+          // eslint-disable-next-line @typescript-eslint/no-require-imports, no-undef
+          source={require('../../assets/images/winds/East.png')} // TODO: change wind based on round
           style={{
             borderRadius: 100,
             height: '100%',
@@ -176,11 +203,19 @@ Z         source={'./assets/images/winds/East.png'} // TODO: change wind based o
       </TouchableOpacity>
       <PauseMenu 
         isVisible={isPauseModalVisible}
-        onClose={onModalClose}
+        onClose={onPauseModalClose}
         roundWind={winds[roundWindIndex]}
         roundNumber={roundNumber}
       > 
       </PauseMenu>
+
+      <WinModal
+        isVisible ={isWinModalVisible}
+        onClose = {onWinModalClose}
+        roundWind = {winds[roundWindIndex]}
+        roundNumber = {roundNumber}
+        winners = {winners}
+      ></WinModal>
 
     </View>
   );
