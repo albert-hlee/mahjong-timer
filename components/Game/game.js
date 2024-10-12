@@ -14,8 +14,10 @@ import PauseMenu from '../PauseModal/pauseModal';
 
 const Game = ({ starting_increment, starting_bank }) => {
   const [currentTurn, setTurn] = useState(null);
-  // const round = useState(1);
 
+  const winds = ["East", "South", "West", "North"]
+  const [roundWindIndex, setRoundWindIndex] = useState(0); // The round wind [East, South, West, North]
+  const [roundNumber, setRoundNumber] = useState(1); // Turn number within the wind [1,4]
 
   const [isPauseModalVisible, setIsPauseModalVisible] = useState(false);
   const [pauseGameFlag, setPauseGameFlag] = useState(false);
@@ -29,8 +31,6 @@ const Game = ({ starting_increment, starting_bank }) => {
     setIsPauseModalVisible(false);
     setPauseGameFlag(false);
   };
-
-
 
   //TODO: Add wind indicator for given player
   const startingNumberOfPlayers = [0, 1, 3, 2];
@@ -72,6 +72,19 @@ const Game = ({ starting_increment, starting_bank }) => {
     color: "black",
     fontWeight: "bold",
   };
+
+  // TODO: add new modal for winning the game
+  const playerWin = (player) => {
+    console.log(player, "won");
+    // TODO: Add logic for limiting east game/ south game
+    if(roundNumber < 4){
+      setRoundNumber((roundNumber) => roundNumber + 1)
+    } else{
+      setRoundWindIndex((roundWindIndex) => roundWindIndex + 1)
+      setRoundNumber(0)
+    }
+    setTurn(null);
+  }
 
   const playerContainerStyle = function (player) {
     const x = playerToLocationX[player];
@@ -142,7 +155,7 @@ const Game = ({ starting_increment, starting_bank }) => {
               </TouchableOpacity>
               <TouchableOpacity
                 style={[styles.smallButton, styles.ronTsumo]}
-                onPress={() => setTurn(null)}
+                onPress={() => playerWin(player)}
               >
                 <Text style={smallButtonText}>Ron / Tsumo</Text>
               </TouchableOpacity>
@@ -154,14 +167,20 @@ const Game = ({ starting_increment, starting_bank }) => {
       <TouchableOpacity onPress={() => openModal()} style={styles.pauseButton}>
         <Image
           // TODO: why does eslint not like require?
-Z          source={'./assets/images/winds/East.png'} // TODO: change wind based on round
+Z         source={'./assets/images/winds/East.png'} // TODO: change wind based on round
           style={{
             borderRadius: 100,
             height: '100%',
             width: '100%',
           }} />
       </TouchableOpacity>
-      <PauseMenu isVisible={isPauseModalVisible} onClose={onModalClose}> </PauseMenu>
+      <PauseMenu 
+        isVisible={isPauseModalVisible}
+        onClose={onModalClose}
+        roundWind={winds[roundWindIndex]}
+        roundNumber={roundNumber}
+      > 
+      </PauseMenu>
 
     </View>
   );

@@ -6,8 +6,7 @@ const fontScale = PixelRatio.getFontScale();
 const getFontSize = (size) => size / fontScale; // TODO(rxu): replace with breakpoints
 
 // TODO: specify the types to boolean and function
-const PauseMenu = ({ isVisible, onClose }) => {
-
+const PauseMenu = ({ isVisible, onClose, roundWind, roundNumber }) => {
   return (
     <Modal
         animationType='slide'
@@ -17,6 +16,7 @@ const PauseMenu = ({ isVisible, onClose }) => {
       <View style={styles.centeredView}>
         <View style={styles.modalContent}>
           <Text style={styles.title}>Pause screen</Text>
+          <Text>{roundWind} {roundNumber}</Text>
           <Link style={styles.link} href="/">Home</Link>
           <Pressable onPress={onClose}>
               <Text style={styles.link}>Back</Text>
@@ -61,6 +61,8 @@ const styles = StyleSheet.create({
 PauseMenu.propTypes = {
   isVisible: PropTypes.bool, 
   onClose: PropTypes.func,
+  roundWind: PropTypes.string,
+  roundNumber: PropTypes.number,
 }
 
 
