@@ -9,6 +9,7 @@ const Player = ({
   endTurnCb,
   my_turn,
   pause_game_flag,
+  reset_timer,
 }) => {
   const out_of_time_cb = () => {
     endTurnCb();
@@ -52,6 +53,7 @@ const Player = ({
         timer_running={my_turn}
         out_of_time_cb={out_of_time_cb}
         is_paused={pause_game_flag}
+        reset_timer={reset_timer}
       />
     </View>
   );
@@ -64,6 +66,7 @@ Player.propTypes = {
   endTurnCb: PropTypes.func,
   my_turn: PropTypes.bool,
   pause_game_flag: PropTypes.bool,
+  reset_timer: PropTypes.bool,
 }
 
 export default Player;

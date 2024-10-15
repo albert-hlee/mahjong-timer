@@ -37,10 +37,6 @@ export default function RootLayout() {
         <Stack.Screen name="index" options={{ headerShown: false }} />
         <Stack.Screen name="mainMenu" options={{ headerShown: false }} />
         <Stack.Screen name="gameView" options={{ headerShown: false }} />
-        <Stack.Screen
-          name="pauseModal"  
-          options={{ presentation: 'modal'}} // This makes it a modal
-        />
       </Stack>
     </ThemeProvider>
   );

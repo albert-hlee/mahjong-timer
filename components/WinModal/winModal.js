@@ -5,7 +5,7 @@ const fontScale = PixelRatio.getFontScale();
 const getFontSize = (size) => size / fontScale; // TODO(rxu): replace with breakpoints
 
 // TODO: specify the types to boolean and function
-const WinModal = ({ isVisible, onClose, roundWind, roundNumber, winners }) => {
+const WinModal = ({ isVisible, onClose, roundWind, roundNumber, winners, loser }) => {
   return (
     <Modal
         animationType='slide'
@@ -14,7 +14,8 @@ const WinModal = ({ isVisible, onClose, roundWind, roundNumber, winners }) => {
     >
       <View style={styles.centeredView}>
         <View style={styles.modalContent}>
-          <Text style={styles.title}>Player {winners} wins! </Text>
+          <Text style={styles.title}>Players: {winners} win! </Text>
+          <Text style={styles.title}>Players: {loser} lose! </Text>
           <Text>{roundWind} {roundNumber}</Text>
           <Pressable onPress={onClose}>
               <Text style={styles.link}>Back</Text>
@@ -58,6 +59,7 @@ WinModal.propTypes = {
   roundWind: PropTypes.string,
   roundNumber: PropTypes.number,
   winners: PropTypes.arrayOf(PropTypes.number),
+  loser: PropTypes.number,
 }
 
 export default WinModal;

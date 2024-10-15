@@ -13,7 +13,8 @@ const Timer = ({
   starting_bank, 
   timer_running, 
   out_of_time_cb, 
-  is_paused
+  is_paused,
+  reset_timer,
 }) => {
   // timer modal will pop up when player time hits 0
   const [current_increment_time, setCurrentIncrementTime] =
@@ -41,7 +42,6 @@ const Timer = ({
     },
   });
 
-
   useEffect(() => {
     if (!is_paused) {
       if (timer_running) {
@@ -53,7 +53,6 @@ const Timer = ({
         } else {
           if (bank_time <= 0) {
             console.log("Player " + player_id + " out of time.");
-            resetTimer();
             out_of_time_cb();
           } else {
             const bankIntervalId = setInterval(() => {
@@ -63,14 +62,17 @@ const Timer = ({
           }
         }
       } else {
-        resetTimer();
+        setCurrentIncrementTime(starting_increment);
       }
     }
   }, [current_increment_time, bank_time, timer_running, out_of_time_cb]);
 
-  const resetTimer = () => {
-    setCurrentIncrementTime(starting_increment);
-  };
+  // Not sure if best practice, maybe use forward refs? 
+  useEffect(() => {
+    if (reset_timer) {
+      setBankTime(starting_bank);
+    }
+  }, [reset_timer]);
 
   return (
     <View style={styles.timerContainer}>
@@ -92,6 +94,7 @@ Timer.propTypes = {
   timer_running: PropTypes.bool,
   out_of_time_cb: PropTypes.func,
   is_paused: PropTypes.bool,
+  reset_timer: PropTypes.bool,
 }
 
 export default Timer;

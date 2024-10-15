@@ -30,6 +30,7 @@ const Game = ({ starting_increment, starting_bank }) => {
   // ------------------------- For Win Modal -------------------------
   const [isPauseModalVisible, setIsPauseModalVisible] = useState(false);
   const [pauseGameFlag, setPauseGameFlag] = useState(false);
+  const [resetTimerFlag, setResetTimerFlag] = useState(false);
 
   const openPauseModal = () => {
     setPauseGameFlag(true);
@@ -47,17 +48,23 @@ const Game = ({ starting_increment, starting_bank }) => {
 
   const onWinModalClose = () => {
     setWinners([]);
+    setTurn(null);
+
     setIsWinModalVisible(false);
     setPauseGameFlag(false);
   };
 
   // TODO: add a 5s timer to allow for multiple Rons
   // The loser is implicitly the player who's current turn it is. We will also define Ron vs Tsumo based on that.
+  // TODO: Add 
   const playerWin = (winner) => {
     winners.push(winner)
 
-    console.log(winners)
-    console.log(typeof winners)
+    setResetTimerFlag(true);
+    setTimeout(() => {
+      setResetTimerFlag(false);
+    }, 0); // This ensures the reset is temporary
+    
     // TODO: Add logic for limiting east game/ south game
     if(roundNumber < 4){
       setRoundNumber((roundNumber) => roundNumber + 1)
@@ -67,8 +74,6 @@ const Game = ({ starting_increment, starting_bank }) => {
     }
     setIsWinModalVisible(true);
     setPauseGameFlag(true);
-
-    setTurn(null);
   }
 
   //TODO: Add wind indicator for given player
@@ -155,6 +160,7 @@ const Game = ({ starting_increment, starting_bank }) => {
                   endTurnCb={endTurnCb}
                   my_turn={currentTurn === player}
                   pause_game_flag={pauseGameFlag}
+                  reset_timer={resetTimerFlag}
                 />
               </TouchableOpacity>
             </View>
@@ -215,6 +221,7 @@ const Game = ({ starting_increment, starting_bank }) => {
         roundWind = {winds[roundWindIndex]}
         roundNumber = {roundNumber}
         winners = {winners}
+        loser = {currentTurn}
       ></WinModal>
 
     </View>
