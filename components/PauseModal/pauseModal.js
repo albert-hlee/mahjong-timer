@@ -6,7 +6,7 @@ const fontScale = PixelRatio.getFontScale();
 const getFontSize = (size) => size / fontScale; // TODO(rxu): replace with breakpoints
 
 // TODO: specify the types to boolean and function
-const PauseMenu = ({ isVisible, onClose, roundWind, roundNumber }) => {
+const PauseMenu = ({ isVisible, onClose, roundWind, roundNumber, onResetRound }) => {
   return (
     <Modal
         animationType='slide'
@@ -20,6 +20,9 @@ const PauseMenu = ({ isVisible, onClose, roundWind, roundNumber }) => {
           <Link style={styles.link} href="/">Home</Link>
           <Pressable onPress={onClose}>
               <Text style={styles.link}>Back</Text>
+          </Pressable>
+          <Pressable onPress={onResetRound}>
+              <Text style={styles.link}>Reset Round</Text>
           </Pressable>
         </View>
       </View>
@@ -49,12 +52,13 @@ const styles = StyleSheet.create({
   title: {
     textAlign: 'center',
     fontStyle: 'normal',
-    fontSize: getFontSize(30),
+    fontSize: getFontSize(20),
     paddingBottom: 30
   },
   link: {
+    textAlign: 'center',
     fontSize: getFontSize(18),             // Optional: set font size
-    padding: 30,              // Optional: add padding around the links
+    padding: 10,              // Optional: add padding around the links
   },
 });
 
@@ -63,6 +67,7 @@ PauseMenu.propTypes = {
   onClose: PropTypes.func,
   roundWind: PropTypes.string,
   roundNumber: PropTypes.number,
+  onResetRound: PropTypes.func,
 }
 
 

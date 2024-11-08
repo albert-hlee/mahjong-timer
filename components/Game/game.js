@@ -27,7 +27,7 @@ const Game = ({ starting_increment, starting_bank }) => {
     // TODO: Add formatting information
   }
 
-  // ------------------------- For Win Modal -------------------------
+  // ------------------------- For Pause Modal -------------------------
   const [isPauseModalVisible, setIsPauseModalVisible] = useState(false);
   const [pauseGameFlag, setPauseGameFlag] = useState(false);
   const [resetTimerFlag, setResetTimerFlag] = useState(false);
@@ -41,6 +41,17 @@ const Game = ({ starting_increment, starting_bank }) => {
     setIsPauseModalVisible(false);
     setPauseGameFlag(false);
   };
+
+  const onPauseModalResetRound =() => {
+    setResetTimerFlag(true);
+    setTimeout(() => {
+      setResetTimerFlag(false);
+    }, 0); // This ensures the reset is temporary
+
+    setIsPauseModalVisible(false);
+    setPauseGameFlag(false);
+    setTurn(null);
+  }
 
   // ------------------------- For Win Modal -------------------------
   const [isWinModalVisible, setIsWinModalVisible] = useState(false);
@@ -212,6 +223,7 @@ const Game = ({ starting_increment, starting_bank }) => {
         onClose={onPauseModalClose}
         roundWind={winds[roundWindIndex]}
         roundNumber={roundNumber}
+        onResetRound={onPauseModalResetRound}
       > 
       </PauseMenu>
 
