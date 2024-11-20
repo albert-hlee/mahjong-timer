@@ -20,13 +20,6 @@ const Game = ({ starting_increment, starting_bank }) => {
   const [roundWindIndex, setRoundWindIndex] = useState(0); // The round wind [East, South, West, North]
   const [roundNumber, setRoundNumber] = useState(1); // Turn number within the wind [1,4]
 
-  // TODO: change formatting and player information to use player type
-  type Player = {
-    id: number,
-    wind: string,
-    // TODO: Add formatting information
-  }
-
   // ------------------------- For Pause Modal -------------------------
   const [isPauseModalVisible, setIsPauseModalVisible] = useState(false);
   const [pauseGameFlag, setPauseGameFlag] = useState(false);
@@ -87,31 +80,27 @@ const Game = ({ starting_increment, starting_bank }) => {
     setPauseGameFlag(true);
   }
 
-  //TODO: Add wind indicator for given player
-  const startingNumberOfPlayers = [0, 1, 3, 2];
-  const playerToDirection = {
-    0: 90,
-    1: -90,
-    2: -90,
-    3: 90,
-  };
+  // TODO: change formatting and player information to use player type
+  class PlayerInfo {
+    constructor(id, wind, playerDirection, playerLocationX, playerLocationY) {
+      this.id = id;
+      this.wind = wind;
+      this.playerDirection = playerDirection;
+      this.playerLocationX = playerLocationX;
+      this.playerLocationY = playerLocationY;
+    }
+  }
 
-  const playerToLocationX = {
-    0: 0,
-    1: 1,
-    2: 1,
-    3: 0,
-  };
-
-  const playerToLocationY = {
-    0: 0,
-    1: 0,
-    2: 1,
-    3: 1,
-  };
+  const [startingWind, setStartingWind] = useState(Math.floor(Math.random() * 4));
+  const players = [
+    new PlayerInfo(0, winds[startingWind % 4], 90, 0, 0),
+    new PlayerInfo(1, winds[(startingWind + 1) % 4], -90, 1, 0),
+    new PlayerInfo(2, winds[(startingWind + 2) % 4], -90, 1, 1),
+    new PlayerInfo(3, winds[(startingWind + 3) % 4], 90, 0, 1),
+  ]
 
   const endTurnCb = () => {
-    setTurn((playerTurn) => (playerTurn - 1 + 4) % 4);
+    setTurn((playerTurn) => (playerTurn + 3) % 4);
   };
 
   const chiDisabledCondition = (player) => {
@@ -129,8 +118,8 @@ const Game = ({ starting_increment, starting_bank }) => {
   };
 
   const playerContainerStyle = function (player) {
-    const x = playerToLocationX[player];
-    const y = playerToLocationY[player];
+    const x = player.playerLocationX;
+    const y = player.playerLocationY;
     return {
       top: -(width - height) / 4 + (y * height) / 2,
       left: (width - height) / 4 + (x * width) / 2,
@@ -141,7 +130,7 @@ const Game = ({ starting_increment, starting_bank }) => {
       backgroundColor: "white",
       borderColor: "black",
       borderWidth: 1.5,
-      transform: [{ rotate: `${playerToDirection[player]}deg` }],
+      transform: [{ rotate: `${player.playerDirection}deg` }],
       position: "absolute",
       flex: 1,
       flexDirection: "row",
@@ -150,26 +139,27 @@ const Game = ({ starting_increment, starting_bank }) => {
 
   return (
     <View style={styles.parentContainer}>
-      {startingNumberOfPlayers.map(player => {
+      {players.map(player => {
         return (
-          <View key={player} style={playerContainerStyle(player)}>
+          <View key={player.id} style={playerContainerStyle(player)}>
             <View style={styles.leftPlayerContainer}>
               <TouchableOpacity
-                disabled={!(currentTurn === null || currentTurn === player)}
+                disabled={!(currentTurn === null || currentTurn === player.id)}
                 onPress={() => {
                   if (currentTurn === null) {
-                    setTurn(player);
+                    setTurn(player.id);
                   } else {
                     setTurn((playerTurn) => (playerTurn + 3) % 4);
                   }
                 }}
               >
                 <Player
-                  id={player}
+                  id={player.id}
+                  wind={player.wind}
                   starting_increment={starting_increment}
                   starting_bank={starting_bank}
                   endTurnCb={endTurnCb}
-                  my_turn={currentTurn === player}
+                  my_turn={currentTurn === player.id}
                   pause_game_flag={pauseGameFlag}
                   reset_timer={resetTimerFlag}
                 />
@@ -178,19 +168,19 @@ const Game = ({ starting_increment, starting_bank }) => {
             <View style={styles.rightButtonContainer}>
               <TouchableOpacity
                 style={[styles.smallButton, styles.chiButton]}
-                disabled={chiDisabledCondition(player)}
-                onPress={() => setTurn(player)}
+                disabled={chiDisabledCondition(player.id)}
+                onPress={() => setTurn(player.id)}
               >
                 <Text style={smallButtonText}>Chi</Text>
               </TouchableOpacity>
               <TouchableOpacity
                 style={[styles.smallButton, styles.ponKonButton]}
-                onPress={() => setTurn(player)}
+                onPress={() => setTurn(player.id)}
               >
                 <Text style={smallButtonText}>Pon / Kan</Text>
               </TouchableOpacity>
               <TouchableOpacity
-                disabled={!(currentTurn === player)}
+                disabled={!(currentTurn === player.id)}
                 style={[styles.smallButton, styles.riichiButton]}
                 onPress={() => setTurn((playerTurn) => (playerTurn + 3) % 4)}
               >
@@ -198,7 +188,7 @@ const Game = ({ starting_increment, starting_bank }) => {
               </TouchableOpacity>
               <TouchableOpacity
                 style={[styles.smallButton, styles.ronTsumo]}
-                onPress={() => playerWin(player)}
+                onPress={() => playerWin(player.id)}
               >
                 <Text style={smallButtonText}>Ron / Tsumo</Text>
               </TouchableOpacity>

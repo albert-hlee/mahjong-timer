@@ -4,6 +4,7 @@ import PropTypes from 'prop-types'
 
 const Player = ({
   id,
+  wind,
   starting_increment,
   starting_bank,
   endTurnCb,
@@ -33,7 +34,7 @@ const Player = ({
       elevation: 0, // Remove Shadow for Android
       fontSize: isTablet ? "24" : "16",
       fontWeight: "bold",
-      paddingBottom: isTablet ? 75 : 30,
+      paddingBottom: isTablet ? 20 : 10,
       paddingTop: isTablet ? 75 : 30,
       shadowColor: "rgba(0,0,0, 0.0)", // Remove Shadow for iOS
       shadowOffset: { height: 0, width: 0 },
@@ -41,11 +42,24 @@ const Player = ({
       shadowRadius: 0,
       textAlign: "center", // <-- the magic
     },
+    wind: {
+      borderWidth: 0, // Remove Border
+      color: my_turn ? "white" : "black",
+      elevation: 0, // Remove Shadow for Android
+      fontSize: isTablet ? "16" : "12",
+      paddingBottom: isTablet ? 40 : 25,
+      shadowColor: "rgba(0,0,0, 0.0)", // Remove Shadow for iOS
+      shadowOffset: { height: 0, width: 0 },
+      shadowOpacity: 0,
+      shadowRadius: 0,
+      textAlign: "center",
+    }
   });
 
   return (
     <View style={styles.playerContainer}>
       <Text style={styles.playerName}>Player {id}</Text>
+      <Text style={styles.wind}>{wind}</Text>
       <Timer
         player_id={id}
         starting_increment={starting_increment}
@@ -61,6 +75,7 @@ const Player = ({
 
 Player.propTypes = {
   id: PropTypes.number,
+  wind: PropTypes.string,
   starting_increment: PropTypes.number,
   starting_bank: PropTypes.number,
   endTurnCb: PropTypes.func,
