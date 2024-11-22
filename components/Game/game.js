@@ -20,6 +20,7 @@ const Game = ({ starting_increment, starting_bank }) => {
   const [roundWindIndex, setRoundWindIndex] = useState(0); // The round wind [East, South, West, North]
   const [roundNumber, setRoundNumber] = useState(1); // Turn number within the wind [1,4]
 
+  const { height, width } = useWindowDimensions();
   // ------------------------- For Pause Modal -------------------------
   const [isPauseModalVisible, setIsPauseModalVisible] = useState(false);
   const [pauseGameFlag, setPauseGameFlag] = useState(false);
@@ -80,23 +81,27 @@ const Game = ({ starting_increment, starting_bank }) => {
     setPauseGameFlag(true);
   }
 
-  // TODO: change formatting and player information to use player type
+  // ------------------------- Player Display Information/Formatting -------------------------
+  // playerDirection - orientation rotation clockwise angle
+  // playerLocationX, playerLocationY - the top left corner of the container
   class PlayerInfo {
-    constructor(id, wind, playerDirection, playerLocationX, playerLocationY) {
+    constructor(id, wind, direction, locationX, locationY, height, width) {
       this.id = id;
       this.wind = wind;
-      this.playerDirection = playerDirection;
-      this.playerLocationX = playerLocationX;
-      this.playerLocationY = playerLocationY;
+      this.direction = direction;
+      this.locationX = locationX;
+      this.locationY = locationY;
+      this.height = height;
+      this.width = width;
     }
   }
 
-  const [startingWind, setStartingWind] = useState(Math.floor(Math.random() * 4));
+  const [startingWind] = useState(Math.floor(Math.random() * 4));
   const players = [
-    new PlayerInfo(0, winds[startingWind % 4], 90, 0, 0),
-    new PlayerInfo(1, winds[(startingWind + 1) % 4], -90, 1, 0),
-    new PlayerInfo(2, winds[(startingWind + 2) % 4], -90, 1, 1),
-    new PlayerInfo(3, winds[(startingWind + 3) % 4], 90, 0, 1),
+    new PlayerInfo(0, winds[startingWind % 4], 180, 0, 0, height / 4, width),
+    new PlayerInfo(1, winds[(startingWind + 1) % 4], -90, height / 4 + height / 4 - width / 4, - height / 4 + 3 * width / 4, width / 2, height / 2),
+    new PlayerInfo(2, winds[(startingWind + 2) % 4], 0, 3 * height / 4, 0, height / 4, width),
+    new PlayerInfo(3, winds[(startingWind + 3) % 4], 90, height / 4 + height / 4 - width / 4, - height / 4 + width / 4, width / 2, height / 2),
   ]
 
   const endTurnCb = () => {
@@ -107,10 +112,8 @@ const Game = ({ starting_increment, starting_bank }) => {
     return !(currentTurn - player === 1 || player - currentTurn == 3);
   };
 
-  const { height, width } = useWindowDimensions();
   const isTablet = width >= 768;
 
-  // Should we move stylesheets into the component itself?
   const smallButtonText = {
     fontSize: isTablet ? 24 : 14,
     color: "black",
@@ -118,19 +121,17 @@ const Game = ({ starting_increment, starting_bank }) => {
   };
 
   const playerContainerStyle = function (player) {
-    const x = player.playerLocationX;
-    const y = player.playerLocationY;
     return {
-      top: -(width - height) / 4 + (y * height) / 2,
-      left: (width - height) / 4 + (x * width) / 2,
-      width: height / 2,
-      height: width / 2,
+      top: player.locationX,
+      left: player.locationY,
+      width: player.width,
+      height: player.height,
       justifyContent: "center",
       alignItems: "center",
       backgroundColor: "white",
       borderColor: "black",
       borderWidth: 1.5,
-      transform: [{ rotate: `${player.playerDirection}deg` }],
+      transform: [{ rotate: `${player.direction}deg` }],
       position: "absolute",
       flex: 1,
       flexDirection: "row",
