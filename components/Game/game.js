@@ -1,4 +1,4 @@
-import { React, useState } from "react";
+import { React, useState, useEffect } from "react";
 import {
   Image,
   Text,
@@ -55,31 +55,51 @@ const Game = ({ starting_increment, starting_bank }) => {
     setWinners([]);
     setTurn(null);
 
-    setIsWinModalVisible(false);
-    setPauseGameFlag(false);
-  };
-
-  // TODO: add a 5s timer to allow for multiple Rons
-  // The loser is implicitly the player who's current turn it is. We will also define Ron vs Tsumo based on that.
-  // TODO: Add 
-  const playerWin = (winner) => {
-    winners.push(winner)
+    // TODO: Add logic for limiting east game/ south game
+    if (roundNumber < 4) {
+      setRoundNumber((roundNumber) => roundNumber + 1)
+    } else {
+      setRoundWindIndex((roundWindIndex) => roundWindIndex + 1)
+      setRoundNumber(0)
+    }
 
     setResetTimerFlag(true);
     setTimeout(() => {
       setResetTimerFlag(false);
     }, 0); // This ensures the reset is temporary
-    
-    // TODO: Add logic for limiting east game/ south game
-    if(roundNumber < 4){
-      setRoundNumber((roundNumber) => roundNumber + 1)
-    } else{
-      setRoundWindIndex((roundWindIndex) => roundWindIndex + 1)
-      setRoundNumber(0)
-    }
-    setIsWinModalVisible(true);
+
+    setIsWinModalVisible(false);
+    setPauseGameFlag(false);
+  };
+
+  const [checkWinnerFlag, setCheckWinnerFlag] = useState(false);
+  // TODO: add a 5s timer to allow for multiple Rons
+  // The loser is implicitly the player who's current turn it is. We will also define Ron vs Tsumo based on that.
+  // TODO: Add logic for setting winner and loser, no loser on tsumo
+  const playerWin = (winner) => {
+    winners.push(winner);
+
     setPauseGameFlag(true);
+    setCheckWinnerFlag(true);
   }
+
+  // 3 second timer after a Ron/Tsumo is called in case of mulitple Rons
+  const winTimerSec = 3;
+  const [checkWinnerTime, setCheckWinnerTime] = useState(winTimerSec);
+  useEffect(() => {
+    if (checkWinnerFlag) {
+      if (checkWinnerTime > 0) {
+        const winnerTimeIntervalId = setInterval(() => {
+          setCheckWinnerTime((checkWinnerTime) => checkWinnerTime - 1);
+        }, 1000);
+        return () => clearInterval(winnerTimeIntervalId);
+      } else {
+        setCheckWinnerTime(winTimerSec);
+        setCheckWinnerFlag(false);
+        setIsWinModalVisible(true);
+      }
+    }
+  }, [checkWinnerFlag, checkWinnerTime]);
 
   // ------------------------- Player Display Information/Formatting -------------------------
   // playerDirection - orientation rotation clockwise angle
