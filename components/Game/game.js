@@ -68,12 +68,16 @@ const Game = ({ starting_increment, starting_bank }) => {
       setResetTimerFlag(false);
     }, 0); // This ensures the reset is temporary
 
+    setCheckWinnerTime(winTimerSec);
     setIsWinModalVisible(false);
     setPauseGameFlag(false);
   };
 
+  // 3 second timer after a Ron/Tsumo is called in case of mulitple Rons
+  const winTimerSec = 3;
+  const [checkWinnerTime, setCheckWinnerTime] = useState(winTimerSec);
+
   const [checkWinnerFlag, setCheckWinnerFlag] = useState(false);
-  // TODO: add a 5s timer to allow for multiple Rons
   // The loser is implicitly the player who's current turn it is. We will also define Ron vs Tsumo based on that.
   // TODO: Add logic for setting winner and loser, no loser on tsumo
   const playerWin = (winner) => {
@@ -81,11 +85,9 @@ const Game = ({ starting_increment, starting_bank }) => {
 
     setPauseGameFlag(true);
     setCheckWinnerFlag(true);
+    setIsWinModalVisible(true);
   }
 
-  // 3 second timer after a Ron/Tsumo is called in case of mulitple Rons
-  const winTimerSec = 3;
-  const [checkWinnerTime, setCheckWinnerTime] = useState(winTimerSec);
   useEffect(() => {
     if (checkWinnerFlag) {
       if (checkWinnerTime > 0) {
@@ -94,9 +96,8 @@ const Game = ({ starting_increment, starting_bank }) => {
         }, 1000);
         return () => clearInterval(winnerTimeIntervalId);
       } else {
-        setCheckWinnerTime(winTimerSec);
+        // setCheckWinnerTime(winTimerSec);
         setCheckWinnerFlag(false);
-        setIsWinModalVisible(true);
       }
     }
   }, [checkWinnerFlag, checkWinnerTime]);
@@ -245,6 +246,7 @@ const Game = ({ starting_increment, starting_bank }) => {
         roundNumber = {roundNumber}
         winners = {winners}
         loser = {currentTurn}
+        checkWinnerTime={checkWinnerTime}
       ></WinModal>
 
     </View>

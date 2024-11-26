@@ -5,25 +5,33 @@ const fontScale = PixelRatio.getFontScale();
 const getFontSize = (size) => size / fontScale; // TODO(rxu): replace with breakpoints
 
 // TODO: specify the types to boolean and function
-const WinModal = ({ isVisible, onClose, roundWind, roundNumber, winners, loser }) => {
-  return (
-    <Modal
+const WinModal = ({ isVisible, onClose, roundWind, roundNumber, winners, loser, checkWinnerTime }) => {
+  if (isVisible && checkWinnerTime > 0) {
+    return (
+      <View>
+        <Text style={styles.winTimer}>{checkWinnerTime}</Text>
+      </View>
+    )
+  } else {
+    return (
+      <Modal
         animationType='slide'
         transparent={true}
         visible={isVisible}
-    >
-      <View style={styles.centeredView}>
-        <View style={styles.modalContent}>
-          <Text style={styles.title}>Players: {winners} win! </Text>
-          <Text style={styles.title}>Players: {loser} lose! </Text>
-          <Text>{roundWind} {roundNumber}</Text>
-          <Pressable onPress={onClose}>
+      >
+        <View style={styles.centeredView}>
+          <View style={styles.modalContent}>
+            <Text style={styles.title}>Players: {winners} win! </Text>
+            <Text style={styles.title}>Players: {loser} lose! </Text>
+            <Text>{roundWind} {roundNumber}</Text>
+            <Pressable onPress={onClose}>
               <Text style={styles.link}>Back</Text>
-          </Pressable>
+            </Pressable>
+          </View>
         </View>
-      </View>
-    </Modal>
-  );
+      </Modal>
+    );
+  }
 }
 
 const styles = StyleSheet.create({
@@ -51,6 +59,11 @@ const styles = StyleSheet.create({
     fontSize: getFontSize(30),
     paddingBottom: 30
   },
+  winTimer: {
+    textAlign: 'center',
+    fontStyle: 'normal',
+    fontSize: getFontSize(300),
+  }
 });
 
 WinModal.propTypes = {
@@ -60,6 +73,7 @@ WinModal.propTypes = {
   roundNumber: PropTypes.number,
   winners: PropTypes.arrayOf(PropTypes.number),
   loser: PropTypes.number,
+  checkWinnerTime: PropTypes.number,
 }
 
 export default WinModal;
